@@ -1,11 +1,11 @@
 import datetime
 import atexit
-import sqlite3
+import psycopg2
 from db_handling import DbHandling as db_conn
 from error_mapper import ErrorMapper
 
 conn = db_conn.connect_to_db()
-database_name = "tasks"
+database_name = "tasmanDb"
 
 class AppStart:
     @staticmethod
@@ -17,12 +17,12 @@ class AppStart:
 
 class SafeDatabaseExecutor:
     @staticmethod
-    def execute_errors_query(db_connection, action_query):
+    def execute_errors_query(db_connection, action_query, params=None):
         try:
             cursor = db_connection.cursor()
-            cursor.execute(action_query)
+            cursor.execute(action_query, params)
             db_connection.commit()
-        except sqlite3.Error as e:
+        except psycopg2.Error as e:
             print(f"Error: {e}")
             print(ErrorMapper.get_error_message(e))
         except Exception as e:
@@ -36,7 +36,7 @@ class DbControl:
 
     @staticmethod
     def generate_unique_title(cursor, given_title):
-        title_query_check = "SELECT title FROM tasks WHERE title LIKE ?"
+        title_query_check = "SELECT title FROM tasks WHERE title LIKE %s"
         cursor.execute(title_query_check, (f"{given_title}%",))
         existing_titles = [row[0] for row in cursor.fetchall()]
 
@@ -73,8 +73,8 @@ class DbControl:
         task_id = DbControl.generate_unique_task_id()
         normalized_status = DbControl.normalize_status_input(task_status)
         task_title = DbControl.generate_unique_title(cursor, title)
-        action_query = f"INSERT INTO tasks (id, title, description, status) VALUES ('{task_id}', '{task_title}', '{description}', '{normalized_status}')"
-        SafeDatabaseExecutor.execute_errors_query(cursor.connection, action_query)
+        action_query = f"INSERT INTO tasks (id, title, description, status) VALUES (%s, %s, %s, %s)"
+        SafeDatabaseExecutor.execute_errors_query(cursor.connection, action_query, (task_id, task_title, description, normalized_status))
         return task_title
 
     @staticmethod
@@ -92,16 +92,16 @@ class DbControl:
     @staticmethod
     def update_task(task_status, task_title, cursor):
         normalized_status = DbControl.normalize_status_input(task_status)
-        action_query = f"UPDATE {database_name} SET status = '{normalized_status}' WHERE title = '{task_title}';"
-        SafeDatabaseExecutor.execute_errors_query(cursor.connection, action_query)
+        action_query = f"UPDATE {database_name} SET status = %s WHERE title = %s;"
+        SafeDatabaseExecutor.execute_errors_query(cursor.connection, action_query, (normalized_status, task_title))
         cursor.connection.commit()
         print(f"DATABASE NOTIFICATION: Task (name: {task_title}) has been successfully updated in database")
         return "Task has been successfully updated in database"
 
     @staticmethod
     def delete_task(task_title, cursor):
-        action_query = f"DELETE FROM {database_name} WHERE title = '{task_title}';"
-        SafeDatabaseExecutor.execute_errors_query(cursor.connection, action_query)
+        action_query = f"DELETE FROM {database_name} WHERE title = %s;"
+        SafeDatabaseExecutor.execute_errors_query(cursor.connection, action_query, (task_title,))
         cursor.connection.commit()
         print(f"DATABASE NOTIFICATION: Task (name: {task_title}) has been successfully deleted from the database")
         return "Task has been successfully removed from the database"

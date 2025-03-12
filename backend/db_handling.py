@@ -1,13 +1,18 @@
 from pathlib import Path
-import sqlite3
+import psycopg2
 
-#DbHandling is responsible for opening and closing the database
+# DbHandling is responsible for opening and closing the database
 
 class DbHandling:
     @staticmethod
     def connect_to_db():
-        db_path = Path(r"C:\general_reps\exercise1_tts\backend\tasks.db")
-        conn = sqlite3.connect(db_path)
+        conn = psycopg2.connect(
+            dbname="tasmanDb",
+            user="adrian99",
+            password="baHBJlnWjzhc7y0hcRyVi1xl4yKhKFnJ",
+            host="dpg-cv85t4ogph6c739b0di0-a",
+            port="5432"
+        )
         return conn
 
     @staticmethod
