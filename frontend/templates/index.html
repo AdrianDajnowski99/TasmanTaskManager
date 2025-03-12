@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-lang="task-manager">Task Manager</title>
+    <link rel="icon" href="favicon.png" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        window.onload = function () {
+            var today = new Date();
+            var dateStr = today.toLocaleDateString('en-US');
+            document.getElementById("current-date").innerHTML = dateStr;
+        };
+    </script>
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='header_logo.png') }}" alt="Logo" class="logo">
+        <p class="date"> Date: <span id="current-date"></span></p>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="section-65-1">
+                <form method="get" action="/">
+                    <label for="sort_by" data-lang="sort-by">Sort by:</label>
+                    <select name="sort_by" id="sort_by">
+                        <option value="id" {% if sort_by == 'id' %}selected{% endif %} data-lang="id">ID</option>
+                        <option value="title" {% if sort_by == 'title' %}selected{% endif %} data-lang="title">Task Title</option>
+                       <option value="status" {% if sort_by == 'status' %}selected{% endif %} data-lang="status">Task Status</option>
+                    </select>
+
+                    <label for="order" data-lang="order">Order:</label>
+                    <select name="order" id="order">
+                        <option value="asc" {% if order == 'asc' %}selected{% endif %} data-lang="ascending">Ascending</option>
+                        <option value="desc" {% if order == 'desc' %}selected{% endif %} data-lang="descending">Descending</option>
+                    </select>
+                    <button type="submit" data-lang="sort">Sort</button>
+                </form>
+            </div>
+
+
+            <div class="section-35-1">
+                <div class="box-container">
+                        <button id="language-switch" onclick="switchLanguage()">Language/Język</button>
+                        <button type="button" id="Select_Help" data-lang="help">Help</button>
+                </div>
+            </div>
+        </div>
+            
+            <div class="container">
+                <div class="section-65-2">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th data-lang="id">ID</th>
+                                <th data-lang="title">Task Title</th>
+                                <th data-lang="description">Task Description</th>
+                                <th data-lang="status">Task Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for task in tasks %}
+                            <tr>
+                                <td>{{ task[0] }}</td>
+                                <td>{{ task[1] }}</td>
+                                <td>{{ task[2] }}</td>
+                                <td>{{ task[3] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
+
+
+            <div class="section-35-2">
+                <div class="box-container">
+                    <form id="MainMenuform">
+                        <label for="Operation" data-lang="operation">Operation</label>
+                        <select id="Operation" name="Operation" required>
+                            <option value="" disabled selected data-lang="choose-operation">Choose the operation</option>
+                            <option value="add" data-lang="add">Add new task</option>
+                            <option value="update" data-lang="update">Update task</option>
+                            <option value="delete" data-lang="delete">Delete task</option>                      
+                        </select>
+                        <button type="button" id="Select_Operation" data-lang="select-operation">Select operation</button>
+                    </form>
+
+
+
+
+                    <section id="AddTask">
+                        <h2 data-lang="add-task">Dodaj zadanie</h2>
+                        <form method="post" action="/add">
+                            <label for="taskNameUpdate" data-lang="task-name">Nazwa zadania:</label>
+                            <input type="text" id="taskNameUpdate" name="taskNameUpdate" required>
+                            <label for="taskDescription" data-lang="description">Opis:</label>
+                            <input type="text" id="taskDescription" name="taskDescription">
+                            <label for="taskStatusAdd" data-lang="status">Status:</label>
+                            <select id="taskStatusAdd" name="taskStatusAdd" required>
+                                <option value="To Do" data-lang="to-do">Do zrobienia</option>
+                                <option value="In Progress" data-lang="in-progress">W trakcie</option>
+                                <option value="Done" data-lang="done">Zrobione</option>
+                                <option value="ND" data-lang="ND">ND</option>
+                            </select>
+                            <button type="submit" data-lang="add">Dodaj</button>
+                        </form>
+                    </section>
+
+                    <section id="UpdateTask">
+                        <h2 data-lang="update-task">Zaktualizuj zadanie</h2>
+                        <form method="post" action="/update">
+                            <label for="taskNameUpdate" data-lang="task-name">Nazwa zadania:</label>
+                            <input type="text" id="taskNameUpdate" name="taskNameUpdate" required>
+                            <label for="taskStatusUpdate" data-lang="new-status">Nowy status:</label>
+                            <select id="taskStatusUpdate" name="taskStatusUpdate" required>
+                                <option value="To Do" data-lang="to-do">Do zrobienia</option>
+                                <option value="In Progress" data-lang="in-progress">W trakcie</option>
+                                <option value="Done" data-lang="done">Zrobione</option>
+                                <option value="ND" data-lang="ND">ND</option>
+                            </select>
+                            <button type="submit" data-lang="update">Aktualizuj</button>
+                        </form>
+                    </section>
+
+                    <section id="DeleteTask">
+                        <h2 data-lang="delete-task">Usuń zadanie</h2>
+                        <form method="post" action="/delete">
+                            <label for="taskNameDelete" data-lang="task-name">Nazwa zadania:</label>
+                            <input type="text" id="taskNameDelete" name="taskNameDelete" required>
+                            <button type="submit" data-lang="delete">Usuń</button>
+                        </form>
+                    </section>
+                </div>
+            </div>
+
+        </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>2025 © <span data-lang="all-rights-reserved">All rights reserved.</span></p>
+    </footer>
+
+    <!-- Overlay structure -->
+    <div id="overlay" class="overlay">
+        <div class="overlay-content">
+            <button id="close-btn" class="close-btn">&times;</button>
+            <div>
+                <h2 id="overlay-title" data-lang="help-title">HELP</h2>
+<p></p>
+<h2>Welcome to the Task Manager application.</h2>
+<ul id="overlay-list">
+    <li>Wybierz operację "Add new task", aby dodać nowe zadanie.</li>
+    <li>Wybierz operację "Update task", aby zaktualizować status zadania.</li>
+    <li>Wybierz operację "Delete task", aby usunąć zadanie.</li>
+</ul>
+<h2 id="error-title">POSSIBLE ERROR CODES:</h2>
+<ul id="error-list">
+    <li data-lang="error-301">Error 301 - Value Error</li>
+    <li data-lang="error-302">Error 302 - File Not Found Error</li>
+    <li data-lang="error-303">Error 303 - Operational Error</li>
+    <li data-lang="error-304">Error 304 - Database Error</li>
+    <li data-lang="error-305">Error 305 - Integrity Error</li>
+    <li data-lang="error-306">Error 306 - Syntax or Invalid Operation Error</li>
+    <li data-lang="error-307">Error 307 - Data Error</li>
+    <li data-lang="error-308">Error 308 - Undefined non-fatal issue</li>
+    <li data-lang="error-309">Error 309 - Database Connection Error</li>
+    <li data-lang="error-399">Error 399 - Not Supported Error</li>
+</ul>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/operations.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/language.js') }}"></script>
+</body>
+</html>

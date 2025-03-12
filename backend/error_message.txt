@@ -1,0 +1,11 @@
+ERROR CODES:
+Error 301 - Value Error
+Error 302 - File Not Found Error
+Error 303 - Operational Error
+Error 304 - Database Error
+Error 305 - Integrity Error
+Error 306 - Syntax or Invalid Operation Error
+Error 307 - Data Error
+Error 308 - Undefined non-fatal issue
+Error 309 - Database Connection Error
+Error 399 - Not Supported Error
