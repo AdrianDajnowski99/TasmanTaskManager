@@ -5,7 +5,7 @@ from db_handling import DbHandling as db_conn
 from error_mapper import ErrorMapper
 
 conn = db_conn.connect_to_db()
-database_name = "tasmanDb"
+database_name = "tasks_2rfh"
 
 class AppStart:
     @staticmethod

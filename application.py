@@ -11,7 +11,7 @@ app = Flask(__name__,
             template_folder='frontend/templates',  
             static_folder='frontend/static')       
 
-DATABASE = "tasmanDb"
+DATABASE = "tasks_2rfh"
 
 @app.route('/')
 def index():
