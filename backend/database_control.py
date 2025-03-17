@@ -73,7 +73,7 @@ class DbControl:
         task_id = DbControl.generate_unique_task_id()
         normalized_status = DbControl.normalize_status_input(task_status)
         task_title = DbControl.generate_unique_title(cursor, title)
-        action_query = f"INSERT INTO tasks (id, title, description, status) VALUES (%s, %s, %s, %s)"
+        action_query = f"INSERT INTO {database_name} (id, title, description, status) VALUES (%s, %s, %s, %s)"
         SafeDatabaseExecutor.execute_errors_query(cursor.connection, action_query, (task_id, task_title, description, normalized_status))
         return task_title
 
