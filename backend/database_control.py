@@ -36,7 +36,7 @@ class DbControl:
 
     @staticmethod
     def generate_unique_title(cursor, given_title):
-        title_query_check = "SELECT title FROM tasks WHERE title LIKE %s"
+        title_query_check = "SELECT title FROM tasks_2rfh WHERE title LIKE %s"
         cursor.execute(title_query_check, (f"{given_title}%",))
         existing_titles = [row[0] for row in cursor.fetchall()]
 
@@ -70,12 +70,18 @@ class DbControl:
 
     @staticmethod
     def add_task(title, description, task_status, cursor):
-        task_id = DbControl.generate_unique_task_id()
-        normalized_status = DbControl.normalize_status_input(task_status)
-        task_title = DbControl.generate_unique_title(cursor, title)
-        action_query = f"INSERT INTO {database_name} (id, title, description, status) VALUES (%s, %s, %s, %s)"
-        SafeDatabaseExecutor.execute_errors_query(cursor.connection, action_query, (task_id, task_title, description, normalized_status))
-        return task_title
+        try:
+            task_id = DbControl.generate_unique_task_id()
+            normalized_status = DbControl.normalize_status_input(task_status)
+            task_title = DbControl.generate_unique_title(cursor, title)
+
+            action_query = f"INSERT INTO {database_name} (id, title, description, status) VALUES (%s, %s, %s, %s)"
+            SafeDatabaseExecutor.execute_errors_query(cursor.connection, action_query, (task_id, task_title, description, normalized_status))
+            
+            return task_title
+        except Exception as e:
+            print(f"Error adding task: {e}")
+            raise
 
     @staticmethod
     def show_tasks(cursor):
