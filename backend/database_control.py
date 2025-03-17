@@ -1,8 +1,12 @@
 import datetime
 import atexit
 import psycopg2
+import logging
 from db_handling import DbHandling as db_conn
 from error_mapper import ErrorMapper
+
+# Configure logging
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 conn = db_conn.connect_to_db()
 database_name = "tasks_2rfh"
@@ -70,12 +74,21 @@ class DbControl:
 
     @staticmethod
     def add_task(title, description, task_status, cursor):
-        task_id = DbControl.generate_unique_task_id()
-        normalized_status = DbControl.normalize_status_input(task_status)
-        task_title = DbControl.generate_unique_title(cursor, title)
-        action_query = f"INSERT INTO {database_name} (id, title, description, status) VALUES (%s, %s, %s, %s)"
-        SafeDatabaseExecutor.execute_errors_query(cursor.connection, action_query, (task_id, task_title, description, normalized_status))
-        return task_title
+        try:
+            task_id = DbControl.generate_unique_task_id()
+            normalized_status = DbControl.normalize_status_input(task_status)
+            task_title = DbControl.generate_unique_title(cursor, title)
+            
+            # Log the input parameters and the generated SQL query
+            logging.debug(f"Adding task with ID: {task_id}, Title: {task_title}, Description: {description}, Status: {normalized_status}")
+            
+            action_query = f"INSERT INTO {database_name} (id, title, description, status) VALUES (%s, %s, %s, %s)"
+            SafeDatabaseExecutor.execute_errors_query(cursor.connection, action_query, (task_id, task_title, description, normalized_status))
+            
+            return task_title
+        except Exception as e:
+            logging.error(f"Error adding task: {e}")
+            raise
 
     @staticmethod
     def show_tasks(cursor):
