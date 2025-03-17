@@ -40,7 +40,7 @@ class DbControl:
 
     @staticmethod
     def generate_unique_title(cursor, given_title):
-        title_query_check = "SELECT title FROM tasks WHERE title LIKE %s"
+        title_query_check = "SELECT title FROM tasks_2rfh WHERE title LIKE %s"
         cursor.execute(title_query_check, (f"{given_title}%",))
         existing_titles = [row[0] for row in cursor.fetchall()]
 
