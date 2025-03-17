@@ -10,7 +10,7 @@ class DbHandling:
             dbname="tasks_2rfh",
             user="adrian99",
             password="baHBJlnWjzhc7y0hcRyVi1xl4yKhKFnJ",
-            host="dpg-cv85t4ogph6c739b0di0-a",
+            host="dpg-cv85t4ogph6c739b0di0-a.frankfurt-postgres.render.com",
             port="5432"
         )
         return conn
