@@ -44,6 +44,26 @@ def add_task():
     
     return redirect(url_for('index'))
 
+@app.route('/edit', methods=['POST'])
+def edit_task():
+    id = request.form['taskIdEdit']
+    title = request.form['taskNameEdit']
+    description = request.form.get('taskDescription', " ")
+
+    current_date = datetime.now().strftime("[%d-%m-%Y] ")
+    if description:
+        description = f"{current_date} {description}"
+    else:
+        description = current_date
+
+    conn = db_conn.connect_to_db()
+    cursor = conn.cursor()
+    controls.edit_task(id, title, description, cursor)
+    cursor.close()
+    db_conn.disconnect_db(conn)
+    
+    return redirect(url_for('index'))
+
 @app.route('/update', methods=['POST'])
 def update_task():
     title = request.form['taskNameUpdate']

@@ -84,6 +84,7 @@
                         <select id="Operation" name="Operation" required>
                             <option value="" disabled selected data-lang="choose-operation">Choose the operation</option>
                             <option value="add" data-lang="add">Add new task</option>
+                            <option value="edit" data-lang="edit-task">Edit task</option>
                             <option value="update" data-lang="update">Update task</option>
                             <option value="delete" data-lang="delete">Delete task</option>                      
                         </select>
@@ -110,6 +111,21 @@
                             <button type="submit" data-lang="add">Dodaj</button>
                         </form>
                     </section>
+
+                    <section id="EditTask">
+                        <h2 data-lang="edit-task">Edytuj zadanie</h2>
+                        <form method="post" action="/edit">
+                            <label for="taskIdEdit" data-lang="task-id">ID zadania:</label>
+                            <input type="text" id="taskIdEdit" name="taskIdEdit" required>
+                            <label for="taskNameEdit" data-lang="task-name">Nazwa zadania:</label>
+                            <input type="text" id="taskNameEdit" name="taskNameEdit" required>
+                            <label for="taskDescription" data-lang="description">Opis:</label>
+                            <input type="text" id="taskDescription" name="taskDescription">
+                            </select>
+                            <button type="submit" data-lang="edit">Edytuj</button>
+                        </form>
+                    </section>
+
 
                     <section id="UpdateTask">
                         <h2 data-lang="update-task">Zaktualizuj zadanie</h2>
@@ -156,6 +172,7 @@
 <h2>Welcome to the Task Manager application.</h2>
 <ul id="overlay-list">
     <li>Wybierz operację "Add new task", aby dodać nowe zadanie.</li>
+    <li>Wybierz operację "Edit task", aby edytować istniejące zadanie.</li>    
     <li>Wybierz operację "Update task", aby zaktualizować status zadania.</li>
     <li>Wybierz operację "Delete task", aby usunąć zadanie.</li>
 </ul>
