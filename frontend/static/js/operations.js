@@ -1,6 +1,7 @@
 const operationSelect = document.getElementById('Operation');
 const selectButton = document.getElementById('Select_Operation');
 const addSection = document.getElementById('AddTask');
+const editSection = document.getElementById('EditTask');
 const updateSection = document.getElementById('UpdateTask');
 const deleteSection = document.getElementById('DeleteTask');
 const helpButton = document.getElementById('Select_Help'); // Help button
@@ -10,6 +11,7 @@ const closeBtn = document.getElementById('close-btn');
 // Show the appropriate section based on selected operation
 selectButton.addEventListener('click', () => {
     addSection.classList.remove('active');
+    editSection.classList.remove('active');
     updateSection.classList.remove('active');
     deleteSection.classList.remove('active');
 
@@ -17,6 +19,8 @@ selectButton.addEventListener('click', () => {
 
     if (selectedOperation === 'add') {
         addSection.classList.add('active');
+    } else if (selectedOperation === 'edit') {
+        editSection.classList.add('active');
     } else if (selectedOperation === 'update') {
         updateSection.classList.add('active');
     } else if (selectedOperation === 'delete') {
