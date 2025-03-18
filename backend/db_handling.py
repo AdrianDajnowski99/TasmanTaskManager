@@ -1,17 +1,20 @@
 from pathlib import Path
 import psycopg2
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 # DbHandling is responsible for opening and closing the database
 
 class DbHandling:
     @staticmethod
     def connect_to_db():
         conn = psycopg2.connect(
-            dbname="tasks_2rfh",
-            user="adrian99",
-            password="baHBJlnWjzhc7y0hcRyVi1xl4yKhKFnJ",
-            host="dpg-cv85t4ogph6c739b0di0-a.frankfurt-postgres.render.com",
-            port="5432"
+            dbname=os.getenv("DB_NAME"),
+            user=os.getenv("DB_USER"),
+            password=os.getenv("DB_PASSWORD"),
+            host=os.getenv("DB_HOST"),
+            port=os.getenv("DB_PORT")
         ) 
         return conn
 

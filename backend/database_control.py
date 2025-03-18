@@ -58,6 +58,15 @@ class DbControl:
         for show_titles in titles:
             print(show_titles[0])
         return [show_titles[0] for show_titles in titles]
+    
+    @staticmethod
+    def get_all_existing_ids(cursor):
+        cursor.execute(f"SELECT id FROM {database_name} ORDER BY id")
+        ids = cursor.fetchall()
+        print("Existing tasks IDs:")
+        for show_ids in ids:
+            print(show_ids[0])
+        return [show_ids[0] for show_ids in ids]
 
     @staticmethod
     def normalize_status_input(task_status):
@@ -95,6 +104,17 @@ class DbControl:
             print("No tasks to show")
         print("DATABASE: END")
 
+
+    @staticmethod
+    def edit_task(task_id, task_title, description, cursor):
+        task_title = DbControl.generate_unique_title(cursor, task_title)
+        action_query = f"UPDATE {database_name} SET title = %s, description = %s WHERE id = %s;"
+        SafeDatabaseExecutor.execute_errors_query(cursor.connection, action_query, (task_title, description, task_id))
+        cursor.connection.commit()
+        print(f"DATABASE NOTIFICATION: Task (id: {task_id}) has been successfully updated in database")
+        return "Task has been successfully updated in database"    
+
+
     @staticmethod
     def update_task(task_status, task_title, cursor):
         normalized_status = DbControl.normalize_status_input(task_status)
@@ -103,6 +123,8 @@ class DbControl:
         cursor.connection.commit()
         print(f"DATABASE NOTIFICATION: Task (name: {task_title}) has been successfully updated in database")
         return "Task has been successfully updated in database"
+
+
 
     @staticmethod
     def delete_task(task_title, cursor):
