@@ -55,6 +55,38 @@ class TaskManager:
         DbControl.show_tasks(cursor)
         cursor.close()
 
+
+
+    @staticmethod
+    def edit_task(db_connection):
+        from database_control import DbControl
+        cursor = db_connection.cursor()
+        existing_ids = DbControl.get_all_existing_ids(cursor)
+        task_id = int(input("DATABASE: Select an ID from the database: "))
+        
+
+        if task_id not in existing_ids:
+            print("DATABASE ERROR: ID does not exist. Try again")
+            cursor.close()
+            return
+        
+        while True:
+            title = str(input("Enter your task title: "))
+            add_description_choice = input("Do you want to add a description to your task? (Choose [Y] for YES or [N] for NO): ")
+
+            if add_description_choice.upper() == "Y":
+                description = str(input("Enter your task description: "))
+            else:
+                description = None
+                print("Adding task description has been skipped.")
+
+            task_title = DbControl.edit_task(task_id, title, description, cursor)
+            print(f"DATABASE NOTIFICATION: Task (id: {task_id}) has been successfully updated in database.")
+            break
+        cursor.close()
+
+
+
     @staticmethod
     def update_task(db_connection):
         from database_control import DbControl 
@@ -112,6 +144,8 @@ class TaskManager:
             TaskManager.update_task(conn)
         elif choice == '4':
             TaskManager.delete_task(conn)
+        elif choice == '5':
+            TaskManager.edit_task(conn)
         elif choice == '9':
             TaskManager.show_errors_list()
         elif choice == "0":

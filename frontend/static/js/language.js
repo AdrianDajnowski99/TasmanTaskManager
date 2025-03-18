@@ -1,6 +1,6 @@
 const translations = {
     en: {
-        "task-manager": "Task Manager",
+        "task-manager": "TASMAN Task Manager",
         "sort-by": "Sort by:",
         "id": "ID",
         "title": "Task Title",
@@ -13,7 +13,7 @@ const translations = {
         "operation": "Operation",
         "choose-operation": "Choose the operation",
         "add": "Add new task",
-        "update": "Update task",
+        "update": "Update task status",
         "delete": "Delete task",
         "show-help": "Show help",
         "select-operation": "Select operation",
@@ -25,7 +25,7 @@ const translations = {
         "in-progress": "In Progress",
         "done": "Done",
         "ND": "ND",
-        "update-task": "Update Task",
+        "update-task": "Update Task Status",
         "new-status": "New Status:",
         "delete-task": "Delete Task",
         "help-title": "HELP",
@@ -44,7 +44,7 @@ const translations = {
         "all-rights-reserved": "TASMAN Task Manager. All rights reserved."
     },
     pl: {
-        "task-manager": "Task Manager",
+        "task-manager": "TASMAN Task Manager",
         "sort-by": "Sortuj według:",
         "id": "ID",
         "title": "Tytuł zadania",
@@ -57,7 +57,7 @@ const translations = {
         "operation": "Operacja",
         "choose-operation": "Wybierz operację",
         "add": "Dodaj nowe zadanie",
-        "update": "Zaktualizuj zadanie",
+        "update": "Zaktualizuj status zadania",
         "delete": "Usuń zadanie",
         "show-help": "Pokaż pomoc",
         "select-operation": "Wybierz operację",
@@ -69,7 +69,7 @@ const translations = {
         "in-progress": "W trakcie",
         "done": "Zrobione",
         "ND": "BD",
-        "update-task": "Zaktualizuj zadanie",
+        "update-task": "Zaktualizuj status zadania",
         "new-status": "Nowy status:",
         "delete-task": "Usuń zadanie",
         "help-title": "POMOC",
