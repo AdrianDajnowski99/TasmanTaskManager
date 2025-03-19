@@ -116,12 +116,15 @@
                         <h2 data-lang="edit-task">Edytuj zadanie</h2>
                         <form method="post" action="/edit">
                             <label for="taskIdEdit" data-lang="task-id">ID zadania:</label>
-                            <input type="text" id="taskIdEdit" name="taskIdEdit" required>
+                            <select id="taskIdEdit" name="taskIdEdit" required>
+                                {% for id in existing_ids %}
+                                    <option value="{{ id }}">{{ id }}</option>
+                                {% endfor %}
+                            </select>
                             <label for="taskNameEdit" data-lang="task-name">Nazwa zadania:</label>
                             <input type="text" id="taskNameEdit" name="taskNameEdit" required>
                             <label for="taskDescription" data-lang="description">Opis:</label>
                             <input type="text" id="taskDescription" name="taskDescription">
-                            </select>
                             <button type="submit" data-lang="edit">Edytuj</button>
                         </form>
                     </section>
@@ -131,7 +134,11 @@
                         <h2 data-lang="update-task">Zaktualizuj zadanie</h2>
                         <form method="post" action="/update">
                             <label for="taskNameUpdate" data-lang="task-name">Nazwa zadania:</label>
-                            <input type="text" id="taskNameUpdate" name="taskNameUpdate" required>
+                            <select type="text" id="taskNameUpdate" name="taskNameUpdate" required>
+                                {% for title in existing_titles %}
+                                    <option value="{{ title }}">{{ title }}</option>
+                                {% endfor %}
+                            </select>
                             <label for="taskStatusUpdate" data-lang="new-status">Nowy status:</label>
                             <select id="taskStatusUpdate" name="taskStatusUpdate" required>
                                 <option value="To Do" data-lang="to-do">Do zrobienia</option>
@@ -147,7 +154,11 @@
                         <h2 data-lang="delete-task">Usuń zadanie</h2>
                         <form method="post" action="/delete">
                             <label for="taskNameDelete" data-lang="task-name">Nazwa zadania:</label>
-                            <input type="text" id="taskNameDelete" name="taskNameDelete" required>
+                            <select type="text" id="taskNameDelete" name="taskNameDelete" required>
+                                {% for title in existing_titles %}
+                                <option value="{{ title }}">{{ title }}</option>
+                            {% endfor %}
+                        </select>
                             <button type="submit" data-lang="delete">Usuń</button>
                         </form>
                     </section>

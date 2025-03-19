@@ -20,9 +20,11 @@ def index():
     conn = db_conn.connect_to_db()
     cursor = conn.cursor()
     tasks = controls.get_all_tasks(cursor, sort_by, order)
+    existing_titles = controls.get_all_existing_titles(cursor)
+    existing_ids = controls.get_all_existing_ids(cursor)
     cursor.close()
     db_conn.disconnect_db(conn)
-    return render_template('index.html', tasks=tasks, sort_by=sort_by, order=order)
+    return render_template('index.html', tasks=tasks, sort_by=sort_by, order=order, existing_ids=existing_ids, existing_titles=existing_titles)
 
 @app.route('/add', methods=['POST'])
 def add_task():
