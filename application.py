@@ -2,7 +2,7 @@ import datetime
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'backend')))
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from backend.db_handling import DbHandling as db_conn
 from backend.database_control import DbControl as controls
 from datetime import datetime
@@ -13,7 +13,7 @@ app = Flask(__name__,
 
 DATABASE = "tasks_2rfh"
 
-@app.route('/')
+@app.route('/',methods=['GET'])
 def index():
     sort_by = request.args.get('sort_by', 'id')
     order = request.args.get('order', 'asc')
@@ -26,7 +26,7 @@ def index():
     db_conn.disconnect_db(conn)
     return render_template('index.html', tasks=tasks, sort_by=sort_by, order=order, existing_ids=existing_ids, existing_titles=existing_titles)
 
-@app.route('/add', methods=['POST'])
+@app.route('/api/tasks', methods=['POST'])
 def add_task():
     title = request.form['taskNameUpdate']
     description = request.form.get('taskDescription', " ")
