@@ -26,7 +26,7 @@ def index():
     db_conn.disconnect_db(conn)
     return render_template('index.html', tasks=tasks, sort_by=sort_by, order=order, existing_ids=existing_ids, existing_titles=existing_titles)
 
-@app.route('/api/tasks', methods=['POST'])
+@app.route('/add', methods=['POST'])
 def add_task():
     title = request.form['taskNameUpdate']
     description = request.form.get('taskDescription', " ")
