@@ -3,7 +3,6 @@ import atexit
 import psycopg2
 from db_handling import DbHandling as db_conn
 from error_mapper import ErrorMapper
-
 conn = db_conn.connect_to_db()
 database_name = "tasks_2rfh"
 
@@ -104,7 +103,6 @@ class DbControl:
             print("No tasks to show")
         print("DATABASE: END")
 
-
     @staticmethod
     def edit_task(task_id, task_title, description, cursor):
         task_title = DbControl.generate_unique_title(cursor, task_title)
@@ -113,8 +111,7 @@ class DbControl:
         cursor.connection.commit()
         print(f"DATABASE NOTIFICATION: Task (id: {task_id}) has been successfully updated in database")
         return "Task has been successfully updated in database"    
-
-
+    
     @staticmethod
     def update_task(task_status, task_title, cursor):
         normalized_status = DbControl.normalize_status_input(task_status)
@@ -123,9 +120,7 @@ class DbControl:
         cursor.connection.commit()
         print(f"DATABASE NOTIFICATION: Task (name: {task_title}) has been successfully updated in database")
         return "Task has been successfully updated in database"
-
-
-
+    
     @staticmethod
     def delete_task(task_title, cursor):
         action_query = f"DELETE FROM {database_name} WHERE title = %s;"
