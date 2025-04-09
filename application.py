@@ -13,7 +13,7 @@ app = Flask(__name__,
 
 DATABASE = "tasks_2rfh"
 
-@app.route('/',methods=['GET'])
+@app.route('/', methods=['GET'])
 def index():
     sort_by = request.args.get('sort_by', 'id')
     order = request.args.get('order', 'asc')
@@ -91,18 +91,116 @@ def delete_task():
     
     return redirect(url_for('index'))
 
-@staticmethod
-def get_all_tasks(db_connection, sort_by='id', order='ASC'):
-    valid_sort_columns = ['id', 'title', 'description', 'status']
-    if sort_by not in valid_sort_columns:
-        sort_by = 'id'
-        
-    query = f"SELECT * FROM {DATABASE} ORDER BY {sort_by} {order}"
-    cursor = db_connection.cursor()
-    cursor.execute(query)
-    tasks = cursor.fetchall()
+
+@app.route('/api/tasks', methods=['GET'])
+def api_get_tasks():
+    sort_by = request.args.get('sort_by', 'id')
+    order = request.args.get('order', 'asc')
+    conn = db_conn.connect_to_db()
+    cursor = conn.cursor()
+    tasks = controls.get_all_tasks(cursor, sort_by, order)
     cursor.close()
-    return tasks
+    db_conn.disconnect_db(conn)
+    return jsonify(tasks), 200
+
+@app.route('/api/tasks', methods=['POST'])
+def api_add_task():
+    data = request.json()
+    title = data.get('title')
+    description = data.get('description', " ")
+    status = data.get('status')
+
+    current_date = datetime.now().strftime("[%d-%m-%Y] ")
+    if description:
+        description = f"{current_date} {description}"
+    else:
+        description = current_date
+
+    conn = db_conn.connect_to_db()
+    cursor = conn.cursor()
+    try:
+        controls.add_task(title, description, status, cursor)
+        conn.commit()
+        response = {'message': 'Task added successfully'}
+    except Exception as e:
+        response
+    finally:
+        cursor.close()
+        db_conn.disconnect_db(conn)
+    return jsonify(response), 201
+
+
+@app.route('/api/tasks/<int:task_id>', methods=['PUT'])
+def api_edit_task(task_id):
+    data = request.json()
+    title = data.get('title')
+    description = data.get('description', " ")
+
+    current_date = datetime.now().strftime("[%d-%m-%Y] ")
+    if description:
+        description = f"{current_date} {description}"
+    else:
+        description = current_date
+
+    conn = db_conn.connect_to_db()
+    cursor = conn.cursor()
+    try:
+        controls.edit_task(task_id, title, description, cursor)
+        conn.commit()
+        response = {'message': 'Task updated successfully'}
+    except Exception as e:
+        response = {'error': str(e)}
+    finally:
+        cursor.close()
+        db_conn.disconnect_db(conn)
+    return jsonify(response), 200
+
+@app.route('/api/tasks/<int:task_id>', methods=['PUT'])
+def api_update_task(task_id):
+    data = request.json()
+    status = data.get('status')
+
+    conn = db_conn.connect_to_db()
+    cursor = conn.cursor()
+    try:
+        controls.update_task(status, task_id, cursor)
+        conn.commit()
+        response = {'message': 'Task status updated successfully'}
+    except Exception as e:
+        response = {'error': str(e)}
+    finally:
+        cursor.close()
+        db_conn.disconnect_db(conn)
+    return jsonify(response), 200
+
+@app.route('/api/tasks/<int:task_id>', methods=['DELETE'])
+def api_delete_task(task_id):
+    conn = db_conn.connect_to_db()
+    cursor = conn.cursor()
+    try:
+        controls.delete_task(task_id, cursor)
+        conn.commit()
+        response = {'message': 'Task deleted successfully'}
+    except Exception as e:
+        response = {'error': str(e)}
+    finally:
+        cursor.close()
+        db_conn.disconnect_db(conn)
+    return jsonify(response), 200
+
+
+# @staticmethod
+# def get_all_tasks(db_connection, sort_by='id', order='ASC'):
+#     valid_sort_columns = ['id', 'title', 'description', 'status']
+#     if sort_by not in valid_sort_columns:
+#         sort_by = 'id'
+        
+#     query = f"SELECT * FROM {DATABASE} ORDER BY {sort_by} {order}"
+#     cursor = db_connection.cursor()
+#     cursor.execute(query)
+#     tasks = cursor.fetchall()
+#     cursor.close()
+#     return tasks
 
 if __name__ == '__main__':
     app.run(port=5005, debug=True)
