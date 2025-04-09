@@ -91,7 +91,6 @@ def delete_task():
     
     return redirect(url_for('index'))
 
-
 @app.route('/api/tasks', methods=['GET'])
 def api_get_tasks():
     sort_by = request.args.get('sort_by', 'id')
@@ -188,19 +187,5 @@ def api_delete_task(task_id):
         db_conn.disconnect_db(conn)
     return jsonify(response), 200
 
-
-# @staticmethod
-# def get_all_tasks(db_connection, sort_by='id', order='ASC'):
-#     valid_sort_columns = ['id', 'title', 'description', 'status']
-#     if sort_by not in valid_sort_columns:
-#         sort_by = 'id'
-        
-#     query = f"SELECT * FROM {DATABASE} ORDER BY {sort_by} {order}"
-#     cursor = db_connection.cursor()
-#     cursor.execute(query)
-#     tasks = cursor.fetchall()
-#     cursor.close()
-#     return tasks
-
 if __name__ == '__main__':
-    app.run(port=5005, debug=True)
+    app.run(port=5005, debug=False)
