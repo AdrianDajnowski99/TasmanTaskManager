@@ -104,7 +104,7 @@ def api_get_tasks():
 
 @app.route('/api/tasks', methods=['POST'])
 def api_add_task():
-    data = request.json()
+    data = request.get_json()
     title = data.get('title')
     description = data.get('description', " ")
     status = data.get('status')
@@ -128,10 +128,9 @@ def api_add_task():
         db_conn.disconnect_db(conn)
     return jsonify(response), 201
 
-
 @app.route('/api/tasks/<int:task_id>', methods=['PUT'])
 def api_edit_task(task_id):
-    data = request.json()
+    data = request.get_json()
     title = data.get('title')
     description = data.get('description', " ")
 
@@ -156,7 +155,7 @@ def api_edit_task(task_id):
 
 @app.route('/api/tasks/<int:task_id>', methods=['PUT'])
 def api_update_task(task_id):
-    data = request.json()
+    data = request.get_json()
     status = data.get('status')
 
     conn = db_conn.connect_to_db()
