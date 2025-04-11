@@ -4,7 +4,7 @@ import psycopg2
 from db_handling import DbHandling as db_conn
 from error_mapper import ErrorMapper
 conn = db_conn.connect_to_db()
-database_name = "tasks_2rfh"
+database_name = "tasman2nd"
 
 class AppStart:
     @staticmethod
@@ -35,7 +35,7 @@ class DbControl:
 
     @staticmethod
     def generate_unique_title(cursor, given_title):
-        title_query_check = "SELECT title FROM tasks_2rfh WHERE title LIKE %s"
+        title_query_check = (f"SELECT title FROM {database_name} WHERE title LIKE %s")
         cursor.execute(title_query_check, (f"{given_title}%",))
         existing_titles = [row[0] for row in cursor.fetchall()]
 
