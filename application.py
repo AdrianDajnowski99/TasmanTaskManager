@@ -105,7 +105,6 @@ def api_get_tasks():
 @app.route('/api/tasks', methods=['POST'])
 def api_add_task():
     data = request.get_json()
-    id = data.get('id')
     title = data.get('title')
     description = data.get('description', " ")
     status = data.get('status')
@@ -119,7 +118,7 @@ def api_add_task():
     conn = db_conn.connect_to_db()
     cursor = conn.cursor()
     try:
-        controls.add_task(id, title, description, status, cursor)
+        controls.add_task(title, description, status, cursor)
         conn.commit()
         response = {'message': 'Task added successfully'}
     except Exception as e:
@@ -172,12 +171,12 @@ def api_update_task(task_id):
         db_conn.disconnect_db(conn)
     return jsonify(response), 200
 
-@app.route('/api/tasks/<int:task_id>', methods=['DELETE'])
-def api_delete_task(task_id):
+@app.route('/api/tasks/<string:title>', methods=['DELETE'])
+def api_delete_task(title):
     conn = db_conn.connect_to_db()
     cursor = conn.cursor()
     try:
-        controls.delete_task(task_id, cursor)
+        controls.delete_task(title, cursor)
         conn.commit()
         response = {'message': 'Task deleted successfully'}
     except Exception as e:
