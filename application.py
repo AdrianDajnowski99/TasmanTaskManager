@@ -116,6 +116,9 @@ def api_add_task():
     description = data.get('description', " ")
     status = data.get('status')
 
+    if not title or title == "":
+        return jsonify("Title is required"), 400
+
     current_date = datetime.now().strftime("[%d-%m-%Y] ")
     if description:
         description = f"{current_date} {description}"
@@ -143,6 +146,9 @@ def api_edit_task(task_id):
     data = request.get_json()
     title = data.get('title')
     description = data.get('description', " ")
+
+    if not title or title == "":
+        return jsonify("Title is required"), 400
 
     current_date = datetime.now().strftime("[%d-%m-%Y] ")
     if description:
