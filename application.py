@@ -122,6 +122,9 @@ def api_add_task():
     else:
         description = current_date
 
+    if status not in status_inputs:
+        return jsonify("Invalid status, opeation can not be performed"), 400
+
     conn = db_conn.connect_to_db()
     cursor = conn.cursor()
     try:
@@ -168,11 +171,15 @@ def api_update_task(task_id):
     conn = db_conn.connect_to_db()
     cursor = conn.cursor()
     try:
+        if status not in status_inputs:
+            return jsonify("Invalid status, opeation can not be performed"), 400
         controls.update_task(status, task_id, cursor)
         conn.commit()
         response = {'message': 'Task status updated successfully'}
     except Exception as e:
         response = {'error': str(e)}
+
+    
     finally:
         cursor.close()
         db_conn.disconnect_db(conn)
