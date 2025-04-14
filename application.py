@@ -5,6 +5,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'backend
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from backend.db_handling import DbHandling as db_conn
 from backend.database_control import DbControl as controls
+from backend.database_control import Testing as testing
 from backend.database_control import status_inputs as status_inputs
 from datetime import datetime
 
@@ -98,8 +99,20 @@ def delete_task():
     
     return redirect(url_for('index'))
 
-@app.route('/api/tasks', methods=['GET'])
-def api_get_tasks():
+@app.route('/api/tasks/single/<int:task_id>', methods=['GET'])
+def api_get_single_task(task_id):
+    conn = db_conn.connect_to_db()
+    cursor = conn.cursor()
+    single_task = testing.get_single_task_by_id(cursor, task_id)
+    cursor.close()
+    db_conn.disconnect_db(conn)
+    if single_task:
+        return jsonify(single_task), 200
+    else:
+        return jsonify("Task not found"), 404
+
+@app.route('/api/tasks/all', methods=['GET'])
+def api_get_all_tasks():
     sort_by = request.args.get('sort_by', 'id')
     order = request.args.get('order', 'asc')
     conn = db_conn.connect_to_db()
@@ -109,7 +122,7 @@ def api_get_tasks():
     db_conn.disconnect_db(conn)
     return jsonify(tasks), 200
 
-@app.route('/api/tasks', methods=['POST'])
+@app.route('/api/tasks/', methods=['POST'])
 def api_add_task():
     data = request.get_json()
     title = data.get('title')
