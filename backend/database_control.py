@@ -5,6 +5,8 @@ from db_handling import DbHandling as db_conn
 from error_mapper import ErrorMapper
 conn = db_conn.connect_to_db()
 database_name = "tasman2nd"
+status_inputs = ["To Do", "In Progress", "Done", "ND"]
+
 
 class AppStart:
     @staticmethod
@@ -28,6 +30,7 @@ class SafeDatabaseExecutor:
             print(f"Unexpected error occurred: {e}")
 
 class DbControl:
+
     @staticmethod
     def generate_unique_task_id():
         now = datetime.datetime.now()
@@ -69,7 +72,6 @@ class DbControl:
 
     @staticmethod
     def normalize_status_input(task_status):
-        status_inputs = ["To Do", "In Progress", "Done", "ND"]
         task_status = task_status.strip().lower()
         for status in status_inputs:
             if task_status.lower() == status.lower():

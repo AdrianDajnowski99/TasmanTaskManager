@@ -5,6 +5,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'backend
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from backend.db_handling import DbHandling as db_conn
 from backend.database_control import DbControl as controls
+from backend.database_control import status_inputs as status_inputs
 from datetime import datetime
 
 app = Flask(__name__, 
@@ -37,6 +38,9 @@ def add_task():
         description = f"{current_date} {description}"
     else:
         description = current_date
+
+    if status not in status_inputs:
+        print("Invalid status, opeation can not be performed")
 
     conn = db_conn.connect_to_db()
     cursor = conn.cursor()
@@ -73,6 +77,9 @@ def update_task():
 
     conn = db_conn.connect_to_db()
     cursor = conn.cursor()
+    if status not in status_inputs:
+        print("Invalid status")
+
     controls.update_task(status, title, cursor)
     cursor.close()
     db_conn.disconnect_db(conn)
