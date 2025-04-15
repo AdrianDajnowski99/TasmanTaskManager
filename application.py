@@ -129,14 +129,18 @@ def api_add_task():
     description = data.get('description', " ")
     status = data.get('status')
 
-    if not title or title == "":
-        return jsonify("Title is required"), 400
-
+    if not title or title == "" or len(title) > 50:
+        return jsonify("Title is too long, 50 characters is allowed"), 400
+    
     current_date = datetime.now().strftime("[%d-%m-%Y] ")
+
     if description:
         description = f"{current_date} {description}"
     else:
         description = current_date
+
+    if len(description) > 267:
+        return jsonify("Description is too long, 267 characters is allowed"), 400
 
     if status not in status_inputs:
         return jsonify("Invalid status, opeation can not be performed"), 400
