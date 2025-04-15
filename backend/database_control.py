@@ -141,3 +141,11 @@ class DbControl:
         cursor.execute(query)
         tasks = cursor.fetchall()
         return tasks
+
+class Testing:
+    @staticmethod
+    def get_single_task_by_id(cursor, task_id):
+        single_task_query=f"SELECT * FROM {database_name} WHERE id = %s"
+        cursor.execute(single_task_query, (task_id,))
+        single_task = cursor.fetchone()
+        return single_task
