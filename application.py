@@ -129,7 +129,7 @@ def api_add_task():
     description = data.get('description', " ")
     status = data.get('status')
 
-    if not title or title == "" or len(title) > 50:
+    if not title or title == "" or len(title) >= 50:
         return jsonify("Title is too long, 50 characters is allowed"), 400
     
     current_date = datetime.now().strftime("[%d-%m-%Y] ")
@@ -216,6 +216,8 @@ def api_delete_task(title):
         controls.delete_task(title, cursor)
         conn.commit()
         response = {'message': 'Task deleted successfully'}
+        if title not in controls.get_all_existing_titles(cursor):
+            return jsonify("Task with given title not found"), 404
     except Exception as e:
         response = {'error': str(e)}
     finally:
