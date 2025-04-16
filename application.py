@@ -7,7 +7,9 @@ from backend.db_handling import DbHandling as db_conn
 from backend.database_control import DbControl as controls
 from backend.database_control import Testing as testing
 from backend.database_control import status_inputs as status_inputs
+
 from datetime import datetime
+
 
 app = Flask(__name__, 
             template_folder='frontend/templates',  
@@ -160,21 +162,35 @@ def api_add_task():
 
 @app.route('/api/tasks/<int:task_id>', methods=['PUT'])
 def api_edit_task(task_id):
+    """Edit a task via API."""
     data = request.get_json()
     title = data.get('title')
     description = data.get('description', " ")
 
-    if not title or title == "":
-        return jsonify("Title is required"), 400
+    # Fetch all existing IDs from the database
+    conn = db_conn.connect_to_db()
+    cursor = conn.cursor()
+    all_ids = controls.get_all_existing_ids(cursor)
+
+    # Check if the task_id exists in the database
+    if task_id not in all_ids:
+        cursor.close()
+        db_conn.disconnect_db(conn)
+        return jsonify("Task with given ID not found"), 404
+
+    if not title or title == "" or len(title) >= 50:
+        return jsonify("Title is too long, 50 characters is allowed"), 400
 
     current_date = datetime.now().strftime("[%d-%m-%Y] ")
     if description:
         description = f"{current_date} {description}"
     else:
         description = current_date
+        
+    if len(description) > 267:
+        return jsonify("Description is too long, 267 characters is allowed"), 400
 
-    conn = db_conn.connect_to_db()
-    cursor = conn.cursor()
+
     try:
         controls.edit_task(task_id, title, description, cursor)
         conn.commit()
@@ -196,6 +212,7 @@ def api_update_task(task_id):
     try:
         if status not in status_inputs:
             return jsonify("Invalid status, opeation can not be performed"), 400
+        
         controls.update_task(status, task_id, cursor)
         conn.commit()
         response = {'message': 'Task status updated successfully'}
