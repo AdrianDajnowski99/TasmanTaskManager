@@ -162,17 +162,21 @@ def api_add_task():
 
 @app.route('/api/tasks/<int:task_id>', methods=['PUT'])
 def api_edit_task(task_id):
-    """Edit a task via API."""
+
     data = request.get_json()
     title = data.get('title')
     description = data.get('description', " ")
 
-    # Fetch all existing IDs from the database
+
     conn = db_conn.connect_to_db()
     cursor = conn.cursor()
     all_ids = controls.get_all_existing_ids(cursor)
 
-    # Check if the task_id exists in the database
+    if task_id is not int:
+        return jsonify("Task ID must be an integer"), 400
+    if task_id < 0:
+        return jsonify("Task ID cannot be a negative"), 400
+
     if task_id not in all_ids:
         cursor.close()
         db_conn.disconnect_db(conn)
