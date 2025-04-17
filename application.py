@@ -7,9 +7,7 @@ from backend.db_handling import DbHandling as db_conn
 from backend.database_control import DbControl as controls
 from backend.database_control import Testing as testing
 from backend.database_control import status_inputs as status_inputs
-
 from datetime import datetime
-
 
 app = Flask(__name__, 
             template_folder='frontend/templates',  
@@ -105,6 +103,10 @@ def delete_task():
 def api_get_single_task(task_id):
     conn = db_conn.connect_to_db()
     cursor = conn.cursor()
+    if task_id is not int:
+        return jsonify("Task ID must be an integer"), 400
+    # if task_id < 0:
+    #     return jsonify("Task ID cannot be a negative"), 400
     single_task = testing.get_single_task_by_id(cursor, task_id)
     cursor.close()
     db_conn.disconnect_db(conn)
@@ -112,6 +114,8 @@ def api_get_single_task(task_id):
         return jsonify(single_task), 200
     else:
         return jsonify("Task not found"), 404
+
+    
 
 @app.route('/api/tasks/all', methods=['GET'])
 def api_get_all_tasks():
@@ -167,7 +171,6 @@ def api_edit_task(task_id):
     title = data.get('title')
     description = data.get('description', " ")
 
-
     conn = db_conn.connect_to_db()
     cursor = conn.cursor()
     all_ids = controls.get_all_existing_ids(cursor)
@@ -193,7 +196,6 @@ def api_edit_task(task_id):
         
     if len(description) > 267:
         return jsonify("Description is too long, 267 characters is allowed"), 400
-
 
     try:
         controls.edit_task(task_id, title, description, cursor)
@@ -223,7 +225,6 @@ def api_update_task(task_id):
     except Exception as e:
         response = {'error': str(e)}
 
-    
     finally:
         cursor.close()
         db_conn.disconnect_db(conn)
