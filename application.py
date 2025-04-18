@@ -99,17 +99,19 @@ def delete_task():
     
     return redirect(url_for('index'))
 
-@app.route('/api/tasks/single/<int:task_id>', methods=['GET'])
+@app.route('/api/tasks/single/<task_id>', methods=['GET'])
 def api_get_single_task(task_id):
+    if not task_id.isdigit():
+        return jsonify("Task ID must be an integer."), 400
+    
+    task_id = int(task_id)
+    
     conn = db_conn.connect_to_db()
     cursor = conn.cursor()
-    if task_id is not int:
-        return jsonify("Task ID must be an integer"), 400
-    # if task_id < 0:
-    #     return jsonify("Task ID cannot be a negative"), 400
     single_task = testing.get_single_task_by_id(cursor, task_id)
     cursor.close()
     db_conn.disconnect_db(conn)
+    
     if single_task:
         return jsonify(single_task), 200
     else:
