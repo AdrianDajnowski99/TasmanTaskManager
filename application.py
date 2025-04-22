@@ -244,7 +244,7 @@ def api_delete_task(title):
     try:
         controls.delete_task(title, cursor)
         conn.commit()
-        response = {'message': 'Task deleted successfully'}
+        response = {'message': 'Task deleted successfully'}, 200
         if title not in controls.get_all_existing_titles(cursor):
             return jsonify("Task with given title not found"), 404
     except Exception as e:
