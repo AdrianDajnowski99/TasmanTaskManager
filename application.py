@@ -223,9 +223,6 @@ def api_update_task(title):
     conn = db_conn.connect_to_db()
     cursor = conn.cursor()
     try:
-        # Debug: Print the title and status
-        print(f"Received title: {title}, status: {status}")
-
         if not title or title == "" or len(title) >= 50:
             return jsonify("Title is too long, 50 characters is allowed"), 400
         
@@ -235,17 +232,13 @@ def api_update_task(title):
         if status not in status_inputs:
             return jsonify({"error": "Invalid status, operation cannot be performed"}), 400
 
-        # Debug: Print before updating the task
         print(f"Updating task with title: {title} and status: {status}")
         controls.update_task(status, title, cursor)
         conn.commit()
-
-        # Debug: Print after committing the transaction
         print(f"Task with title '{title}' updated successfully to status '{status}'")
         return jsonify({'message': 'Task status updated successfully'}), 200
 
     except Exception as e:
-        # Debug: Print the exception
         print(f"Error occurred: {str(e)}")
         return jsonify({'error': f'Could not update task: {str(e)}'}), 400
 
