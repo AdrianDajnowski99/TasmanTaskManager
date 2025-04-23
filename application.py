@@ -232,16 +232,13 @@ def api_update_task(title):
         if status not in status_inputs:
             return jsonify({"error": "Invalid status, operation cannot be performed"}), 400
 
-        print(f"Updating task with title: {title} and status: {status}")
         controls.update_task(status, title, cursor)
         conn.commit()
-        print(f"Task with title '{title}' updated successfully to status '{status}'")
         return jsonify({'message': 'Task status updated successfully'}), 200
-
+    
     except Exception as e:
-        print(f"Error occurred: {str(e)}")
         return jsonify({'error': f'Could not update task: {str(e)}'}), 400
-
+    
     finally:
         cursor.close()
         db_conn.disconnect_db(conn)
