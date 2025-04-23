@@ -182,7 +182,7 @@ def api_edit_task(task_id):
     cursor = conn.cursor()
     all_ids = controls.get_all_existing_ids(cursor)
 
-    if task_id is not int:
+    if not isinstance(task_id, int):
         return jsonify("Task ID must be an integer"), 400
     if task_id < 0:
         return jsonify("Task ID cannot be a negative"), 400
@@ -215,27 +215,43 @@ def api_edit_task(task_id):
         db_conn.disconnect_db(conn)
     return jsonify(response), 200
 
-@app.route('/api/tasks/<int:task_id>', methods=['PUT'])
-def api_update_task(task_id):
+@app.route('/api/tasks/<string:title>', methods=['PUT'])
+def api_update_task(title):
     data = request.get_json()
     status = data.get('status')
 
     conn = db_conn.connect_to_db()
     cursor = conn.cursor()
     try:
-        if status not in status_inputs:
-            return jsonify("Invalid status, opeation can not be performed"), 400
+        # Debug: Print the title and status
+        print(f"Received title: {title}, status: {status}")
+
+        if not title or title == "" or len(title) >= 50:
+            return jsonify("Title is too long, 50 characters is allowed"), 400
         
-        controls.update_task(status, task_id, cursor)
+        if title not in controls.get_all_existing_titles(cursor):
+            return jsonify("Task with given title not found"), 404
+
+        if status not in status_inputs:
+            return jsonify({"error": "Invalid status, operation cannot be performed"}), 400
+
+        # Debug: Print before updating the task
+        print(f"Updating task with title: {title} and status: {status}")
+        controls.update_task(status, title, cursor)
         conn.commit()
-        response = {'message': 'Task status updated successfully'}
+
+        # Debug: Print after committing the transaction
+        print(f"Task with title '{title}' updated successfully to status '{status}'")
+        return jsonify({'message': 'Task status updated successfully'}), 200
+
     except Exception as e:
-        response = {'error': str(e)}
+        # Debug: Print the exception
+        print(f"Error occurred: {str(e)}")
+        return jsonify({'error': f'Could not update task: {str(e)}'}), 400
 
     finally:
         cursor.close()
         db_conn.disconnect_db(conn)
-    return jsonify(response), 200
 
 @app.route('/api/tasks/<string:title>', methods=['DELETE'])
 def api_delete_task(title):
