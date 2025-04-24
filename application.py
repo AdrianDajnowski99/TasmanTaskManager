@@ -248,11 +248,11 @@ def api_delete_task(title):
     conn = db_conn.connect_to_db()
     cursor = conn.cursor()
     try:
-        controls.delete_task(title, cursor)
-        conn.commit()
-        response = {'message': 'Task deleted successfully'}, 200
         if title not in controls.get_all_existing_titles(cursor):
             return jsonify("Task with given title not found"), 404
+        controls.delete_task(title, cursor)
+        conn.commit()
+        response = {'message': 'Task deleted successfully'}
     except Exception as e:
         response = {'error': str(e)}
     finally:
@@ -261,4 +261,4 @@ def api_delete_task(title):
     return jsonify(response), 200
 
 if __name__ == '__main__':
-    app.run(port=5005, debug=False)
+    app.run(port=5005, debug=True)
