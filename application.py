@@ -103,7 +103,6 @@ def delete_task():
 def api_status():
     return jsonify({"status": "API is online"}), 200
 
-
 @app.route('/api/tasks/single/<task_id>', methods=['GET'])
 def api_get_single_task(task_id):
     if not task_id.isdigit():
