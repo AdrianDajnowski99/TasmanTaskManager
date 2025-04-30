@@ -121,8 +121,6 @@ def api_get_single_task(task_id):
     else:
         return jsonify("Task not found"), 404
 
-    
-
 @app.route('/api/tasks/all', methods=['GET'])
 def api_get_all_tasks():
     sort_by = request.args.get('sort_by', 'id')
