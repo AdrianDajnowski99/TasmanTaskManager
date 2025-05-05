@@ -57,19 +57,19 @@ class DbControl:
     def get_all_existing_titles(cursor):
         cursor.execute(f"SELECT title FROM {database_name} ORDER BY id")
         titles = cursor.fetchall()
-        print("Existing tasks Titles:")
+        #print("Existing tasks Titles:")
         for show_titles in titles:
-            print(show_titles[0])
-        return [show_titles[0] for show_titles in titles]
+            #print(show_titles[0])
+            return [show_titles[0] for show_titles in titles]
     
     @staticmethod
     def get_all_existing_ids(cursor):
         cursor.execute(f"SELECT id FROM {database_name} ORDER BY id")
         ids = cursor.fetchall()
-        print("Existing tasks IDs:")
+        #print("Existing tasks IDs:")
         for show_ids in ids:
-            print(show_ids[0])
-        return [show_ids[0] for show_ids in ids]
+            #print(show_ids[0])
+            return [show_ids[0] for show_ids in ids]
 
     @staticmethod
     def normalize_status_input(task_status):
