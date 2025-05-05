@@ -4,7 +4,12 @@ import unittest
 from application import api_status
 #
 import application
-from unittest.mock import patch 
+from unittest.mock import patch, MagicMock
+
+# @patch.multiple('application.db_conn',
+#                 connect_to_db=MagicMock(),
+#                 disconnect_db=MagicMock())
+                
 
 class TestApplication(unittest.TestCase):
     def setUp(self):
@@ -22,15 +27,21 @@ class TestApplication(unittest.TestCase):
         })
 
     @patch('application.api_get_single_task')
-    def test_api_get_single_task(self, mock_api_get_single_task):
-        mock_api_get_single_task.return_value = {
-            'id': 2037809335687457,
+    def test_api_get_single_task(self, mock_get_task):
+        mock_get_task.return_value = {
+            'id': 505250144450153,
+            'title': 'Test Task_5',
+            'description': '[05-05-2025]  This is a test task',
+            'status': 'ND'
         }
-        response = self.client.get('/api/tasks/single/2037809335687457')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json, {
-            'id': 2037809335687457,
 
+        response = self.client.get('/api/tasks/single/505250144450153')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.get_json(), {
+            'id': 505250144450153,
+            'title': 'Test Task_5',
+            'description': '[05-05-2025]  This is a test task',
+            'status': 'ND'
         })
 
     @patch('application.api_add_task')
