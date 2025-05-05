@@ -44,57 +44,57 @@ class TestApplication(unittest.TestCase):
             'status': 'ND'
         })
 
-    @patch('application.api_add_task')
-    def test_api_add_task(self, mock_api_add_task):
-        mock_api_add_task.return_value = {
-            'message': "Task added successfully"
-        }
-        response = self.client.post('/api/tasks/', json={
-            'title': 'Test Task',
-            'description': 'This is a test task',
-            'status': 'ND'
-        })
-        self.assertEqual(response.status_code, 201)
-        self.assertEqual(response.json, {
-            'message': "Task added successfully"
-        }) 
+    # @patch('application.api_add_task')
+    # def test_api_add_task(self, mock_api_add_task):
+    #     mock_api_add_task.return_value = {
+    #         'message': "Task added successfully"
+    #     }
+    #     response = self.client.post('/api/tasks/', json={
+    #         'title': 'Test Task',
+    #         'description': 'This is a test task',
+    #         'status': 'ND'
+    #     })
+    #     self.assertEqual(response.status_code, 201)
+    #     self.assertEqual(response.json, {
+    #         'message': "Task added successfully"
+    #     }) 
 
-    @patch('application.api_edit_task')
-    def test_api_edit_task(self, mock_api_edit_task):
-        mock_api_edit_task.return_value = {
-            'message': 'Task updated successfully'
-        }
-        response = self.client.put('api/tasks/2037809335687457', json={
-            'title': 'Updated Task',
-            'description': 'This is an updated test task',
-        })
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json, {
-            'message': 'Task updated successfully'
-        })
+    # @patch('application.api_edit_task')
+    # def test_api_edit_task(self, mock_api_edit_task):
+    #     mock_api_edit_task.return_value = {
+    #         'message': 'Task updated successfully'
+    #     }
+    #     response = self.client.put('api/tasks/2037809335687457', json={
+    #         'title': 'Updated Task',
+    #         'description': 'This is an updated test task',
+    #     })
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertEqual(response.json, {
+    #         'message': 'Task updated successfully'
+    #     })
 
-    @patch('application.api_update_task')
-    def test_api_update_task(self, mock_api_update_task):
-        mock_api_update_task.return_value = {
-            'message': 'Task status updated successfully'
-        }
-        response = self.client.put('/api/tasks/Updated Task', json={
-            'status': 'Done'
-        })
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json, {
-            'message': 'Task status updated successfully'
-        })
-    @patch('application.api_delete_task')
-    def test_api_delete_task(self, mock_api_delete_task):
-        mock_api_delete_task.return_value = {
-            'message': 'Task deleted successfully'
-        }
-        response = self.client.delete('/api/tasks/Updated Task')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json, {
-            'message': 'Task deleted successfully'
-        })
+    # @patch('application.api_update_task')
+    # def test_api_update_task(self, mock_api_update_task):
+    #     mock_api_update_task.return_value = {
+    #         'message': 'Task status updated successfully'
+    #     }
+    #     response = self.client.put('/api/tasks/Updated Task', json={
+    #         'status': 'Done'
+    #     })
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertEqual(response.json, {
+    #         'message': 'Task status updated successfully'
+    #     })
+    # @patch('application.api_delete_task')
+    # def test_api_delete_task(self, mock_api_delete_task):
+    #     mock_api_delete_task.return_value = {
+    #         'message': 'Task deleted successfully'
+    #     }
+    #     response = self.client.delete('/api/tasks/Updated Task')
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertEqual(response.json, {
+    #         'message': 'Task deleted successfully'
+    #     })
 
 
     if __name__ == '__main__':

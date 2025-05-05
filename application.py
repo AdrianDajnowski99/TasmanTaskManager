@@ -1,8 +1,6 @@
 import datetime
 import sys
 import os
-import json
-from collections import OrderedDict
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'backend')))
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from backend.db_handling import DbHandling as db_conn
@@ -119,16 +117,13 @@ def api_get_single_task(task_id):
     db_conn.disconnect_db(conn)
     
     if single_task:
-        task = OrderedDict([
-            ("id", single_task[0]),
-            ("title", single_task[1]),
-            ("description", single_task[2]),
-            ("status", single_task[3])
-        ])
-        
-        response_json = json.dumps(task, ensure_ascii=False)
-
-        return response_json, 200
+        task = {
+            "id": single_task[0],
+            "title": single_task[1],
+            "description": single_task[2],
+            "status": single_task[3]
+        }
+        return jsonify(task), 200
     else:
         return jsonify("Task not found"), 404
 
