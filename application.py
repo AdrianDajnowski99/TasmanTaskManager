@@ -159,7 +159,7 @@ def api_add_task():
         return jsonify("Description is too long, 267 characters is allowed"), 400
 
     if status not in status_inputs:
-        return jsonify("Invalid status, opeation can not be performed"), 400
+        return jsonify("Invalid status, operation can not be performed"), 400
 
     conn = db_conn.connect_to_db()
     cursor = conn.cursor()
