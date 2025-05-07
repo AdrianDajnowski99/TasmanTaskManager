@@ -1,6 +1,5 @@
 
 import unittest
-#from application import api_status
 import application
 from unittest.mock import patch, MagicMock
 
@@ -8,6 +7,21 @@ class TestApplication(unittest.TestCase):
     def setUp(self):
         self.client = application.app.test_client()
         self.client.testing = True
+        self.setup_database()
+
+    def tearDown(self):
+        self.teardown_database()
+
+    def setup_database(self):
+        self.client.post('/api/tasks/', json={
+            'id': 51000000000000,
+            'title': 'TestTask',
+            'description': 'TestDesc',
+            'status': 'ND'
+        })
+
+    def teardown_database(self):
+        self.client.delete('/api/tasks/TestTask')
 
     @patch('application.api_status')
     def test_api_status(self, mock_api_status):
@@ -19,9 +33,9 @@ class TestApplication(unittest.TestCase):
         self.assertEqual(response.json, {
             'status': "API is online"
         })
-
     @patch('application.api_get_single_task')
     def test_api_get_single_task(self, mock_get_task):
+        
         mock_get_task.return_value = {
             'id': 505250144450153,
             'title': 'Test Task_5',
