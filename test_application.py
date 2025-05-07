@@ -72,7 +72,7 @@ class TestApplication(unittest.TestCase):
     @patch('application.controls.edit_task')
     def test_api_edit_task(self, mock_edit_task, mock_get_task, mock_get_all_ids):
         mock_get_all_ids.return_value = [515151515151515]
-        
+
         mock_get_task.return_value = (
             515151515151515, 
             'TestTask_Mock', 
@@ -101,6 +101,41 @@ class TestApplication(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.get_json()['title'], new_title)
         self.assertEqual(response.get_json()['description'], new_description)
+
+
+
+    @patch('application.controls.get_all_existing_titles')
+    @patch('application.testing.get_single_task_by_id')
+    @patch('application.controls.update_task')
+    def test_api_update_task(self, mock_update_task, mock_get_task, mock_get_all_titles):
+        mock_get_all_titles.return_value = ['TestTask_Mock']
+        
+        mock_get_task.return_value = (
+            515151515151515, 
+            'TestTask_Mock', 
+            'This is a test task', 
+            'ND'
+        )
+        new_status = "Done"
+        mock_update_task.return_value = None 
+
+        response = self.client.put('/api/tasks/TestTask_Mock', json={
+            'status': 'Done',
+        })
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {'message': 'Task status updated successfully'})
+
+        mock_get_task.return_value = (
+            515151515151515, 
+            'TestTask_Mock', 
+            'This is a test task',
+            new_status)
+
+        response = self.client.get('/api/tasks/single/515151515151515')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.get_json()['status'], new_status)
+
 
 
 
