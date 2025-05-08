@@ -1,7 +1,7 @@
 import unittest
-from unittest import mock, TestCase
+from unittest import mock
 import application
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, MagicMock, ANY
 
 class TestApplication(unittest.TestCase):
     def setUp(self):
@@ -51,6 +51,21 @@ class TestApplication(unittest.TestCase):
             'description': 'This is a test task',
             'status': 'ND'
         })
+
+    @patch('application.controls.get_all_tasks')
+    def test_api_get_all_tasks(self, mock_get_all_tasks):
+        mock_get_all_tasks.return_value = [
+            {'id': 515151515151515, 'title': 'Task1', 'description': 'Desc1', 'status': 'ND'},
+            {'id': 525252525252525, 'title': 'Task2', 'description': 'Desc2', 'status': 'Done'}
+        ]
+
+        response = self.client.get('/api/tasks/all?sort_by=id&order=asc')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.get_json()), 2)
+        self.assertEqual(response.get_json()[0]['title'], 'Task1')
+        
+        mock_get_all_tasks.assert_called_once_with(ANY, 'id', 'asc')
+
 
     @patch('application.api_add_task')
     def test_api_add_task(self, mock_api_add_task):
