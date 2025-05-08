@@ -1,7 +1,7 @@
-
 import unittest
+from unittest import mock
 import application
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, MagicMock, ANY
 
 class TestApplication(unittest.TestCase):
     def setUp(self):
@@ -23,16 +23,11 @@ class TestApplication(unittest.TestCase):
     def teardown_database(self):
         self.client.delete('/api/tasks/TestTask')
 
-    @patch('application.api_status')
-    def test_api_status(self, mock_api_status):
-        mock_api_status.return_value = {
-            'status': "API is online"
-        }
+    def test_api_status(self):
         response = self.client.get('/api/tasks/status')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json, {
-            'status': "API is online"
-        })
+        self.assertEqual(response.json, {'status': 'API is online'})
+
 
     @patch('application.testing.get_single_task_by_id')
     def test_api_get_single_task(self, mock_get_task):
@@ -43,7 +38,7 @@ class TestApplication(unittest.TestCase):
             'ND'
         )
 
-        response = self.client.get('/api/tasks/single/51515151515151')
+        response = self.client.get('/api/tasks/single/515151515151515')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.get_json(), {
             'id': 515151515151515,
@@ -51,6 +46,21 @@ class TestApplication(unittest.TestCase):
             'description': 'This is a test task',
             'status': 'ND'
         })
+
+    @patch('application.controls.get_all_tasks')
+    def test_api_get_all_tasks(self, mock_get_all_tasks):
+        mock_get_all_tasks.return_value = [
+            {'id': 515151515151515, 'title': 'Task1', 'description': 'Desc1', 'status': 'ND'},
+            {'id': 525252525252525, 'title': 'Task2', 'description': 'Desc2', 'status': 'Done'}
+        ]
+
+        response = self.client.get('/api/tasks/all?sort_by=id&order=asc')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.get_json()), 2)
+        self.assertEqual(response.get_json()[0]['title'], 'Task1')
+        
+        mock_get_all_tasks.assert_called_once_with(ANY, 'id', 'asc')
+
 
     @patch('application.api_add_task')
     def test_api_add_task(self, mock_api_add_task):
@@ -102,8 +112,6 @@ class TestApplication(unittest.TestCase):
         self.assertEqual(response.get_json()['title'], new_title)
         self.assertEqual(response.get_json()['description'], new_description)
 
-
-
     @patch('application.controls.get_all_existing_titles')
     @patch('application.testing.get_single_task_by_id')
     @patch('application.controls.update_task')
@@ -137,60 +145,25 @@ class TestApplication(unittest.TestCase):
         self.assertEqual(response.get_json()['status'], new_status)
 
 
+    @patch('application.controls.get_all_existing_titles')
+    @patch('application.testing.get_single_task_by_id')
+    @patch('application.controls.delete_task')
+    def test_api_delete_task(self, mock_delete_task, mock_get_task, mock_get_all_titles):
+        mock_get_all_titles.return_value = ['TestTask_DeleteMe']
+        
+        mock_get_task.return_value = (
+            515151515151515, 
+            'TestTask_DeleteMe', 
+            'Delete Me', 
+            'In Progress'
+        )
+        mock_delete_task.return_value = None 
+        response = self.client.delete('/api/tasks/TestTask_DeleteMe')
 
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {'message': 'Task deleted successfully'})
+        mock_delete_task.assert_called_once_with('TestTask_DeleteMe', mock.ANY)
 
-        # @patch('application.api_add_task')
-        # def test_api_add_task(self, mock_api_add_task):
-        #     mock_api_add_task.return_value = {
-        #         'message': "Task added successfully"
-        #     }
-        #     response = self.client.post('/api/tasks/', json={
-        #         'title': 'Test Task',
-        #         'description': 'This is a test task',
-        #         'status': 'ND'
-        #     })
-        #     self.assertEqual(response.status_code, 201)
-        #     self.assertEqual(response.json, {
-        #         'message': "Task added successfully"
-        #     }) 
-
-        # @patch('application.api_edit_task')
-        # def test_api_edit_task(self, mock_api_edit_task):
-        #     mock_api_edit_task.return_value = {
-        #         'message': 'Task updated successfully'
-        #     }
-        #     response = self.client.put('api/tasks/2037809335687457', json={
-        #         'title': 'Updated Task',
-        #         'description': 'This is an updated test task',
-        #     })
-        #     self.assertEqual(response.status_code, 200)
-        #     self.assertEqual(response.json, {
-        #         'message': 'Task updated successfully'
-        #     })
-
-        # @patch('application.api_update_task')
-        # def test_api_update_task(self, mock_api_update_task):
-        #     mock_api_update_task.return_value = {
-        #         'message': 'Task status updated successfully'
-        #     }
-        #     response = self.client.put('/api/tasks/Updated Task', json={
-        #         'status': 'Done'
-        #     })
-        #     self.assertEqual(response.status_code, 200)
-        #     self.assertEqual(response.json, {
-        #         'message': 'Task status updated successfully'
-        #     })
-        # @patch('application.api_delete_task')
-        # def test_api_delete_task(self, mock_api_delete_task):
-        #     mock_api_delete_task.return_value = {
-        #         'message': 'Task deleted successfully'
-        #     }
-        #     response = self.client.delete('/api/tasks/Updated Task')
-        #     self.assertEqual(response.status_code, 200)
-        #     self.assertEqual(response.json, {
-        #         'message': 'Task deleted successfully'
-        #     })
-
-
-        if __name__ == '__main__':
-            unittest.main()
+    
+    if __name__ == '__main__':
+        unittest.main()
