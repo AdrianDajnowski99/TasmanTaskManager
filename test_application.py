@@ -23,16 +23,11 @@ class TestApplication(unittest.TestCase):
     def teardown_database(self):
         self.client.delete('/api/tasks/TestTask')
 
-    @patch('application.api_status')
-    def test_api_status(self, mock_api_status):
-        mock_api_status.return_value = {
-            'status': "API is online"
-        }
+    def test_api_status(self):
         response = self.client.get('/api/tasks/status')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json, {
-            'status': "API is online"
-        })
+        self.assertEqual(response.json, {'status': 'API is online'})
+
 
     @patch('application.testing.get_single_task_by_id')
     def test_api_get_single_task(self, mock_get_task):
@@ -43,7 +38,7 @@ class TestApplication(unittest.TestCase):
             'ND'
         )
 
-        response = self.client.get('/api/tasks/single/51515151515151')
+        response = self.client.get('/api/tasks/single/515151515151515')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.get_json(), {
             'id': 515151515151515,
@@ -170,5 +165,5 @@ class TestApplication(unittest.TestCase):
         mock_delete_task.assert_called_once_with('TestTask_DeleteMe', mock.ANY)
 
     
-        if __name__ == '__main__':
-            unittest.main()
+    if __name__ == '__main__':
+        unittest.main()
