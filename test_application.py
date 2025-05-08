@@ -27,7 +27,7 @@ class TestApplication(unittest.TestCase):
         response = self.client.get('/api/tasks/status')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json, {'status': 'API is online'})
-
+    # ------------------------------------------------------------
 
     @patch('application.testing.get_single_task_by_id')
     def test_api_get_single_task(self, mock_get_task):
@@ -46,6 +46,7 @@ class TestApplication(unittest.TestCase):
             'description': 'This is a test task',
             'status': 'ND'
         })
+    # ------------------------------------------------------------
 
     @patch('application.controls.get_all_tasks')
     def test_api_get_all_tasks(self, mock_get_all_tasks):
@@ -60,7 +61,7 @@ class TestApplication(unittest.TestCase):
         self.assertEqual(response.get_json()[0]['title'], 'Task1')
         
         mock_get_all_tasks.assert_called_once_with(ANY, 'id', 'asc')
-
+    # ------------------------------------------------------------
 
     @patch('application.api_add_task')
     def test_api_add_task(self, mock_api_add_task):
@@ -74,9 +75,10 @@ class TestApplication(unittest.TestCase):
         })
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.json, {
-        'message': "Task added successfully"
-    })
-        
+            'message': "Task added successfully"
+        })
+    # ------------------------------------------------------------
+
     @patch('application.controls.get_all_existing_ids')
     @patch('application.testing.get_single_task_by_id')
     @patch('application.controls.edit_task')
@@ -111,6 +113,7 @@ class TestApplication(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.get_json()['title'], new_title)
         self.assertEqual(response.get_json()['description'], new_description)
+    # ------------------------------------------------------------
 
     @patch('application.controls.get_all_existing_titles')
     @patch('application.testing.get_single_task_by_id')
@@ -143,7 +146,7 @@ class TestApplication(unittest.TestCase):
         response = self.client.get('/api/tasks/single/515151515151515')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.get_json()['status'], new_status)
-
+    # ------------------------------------------------------------
 
     @patch('application.controls.get_all_existing_titles')
     @patch('application.testing.get_single_task_by_id')
@@ -163,7 +166,7 @@ class TestApplication(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json, {'message': 'Task deleted successfully'})
         mock_delete_task.assert_called_once_with('TestTask_DeleteMe', mock.ANY)
+    # ------------------------------------------------------------
 
-    
-    if __name__ == '__main__':
-        unittest.main()
+if __name__ == '__main__':
+    unittest.main()
