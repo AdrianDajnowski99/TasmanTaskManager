@@ -1,7 +1,6 @@
 const translations = {
     en: {
         "task-manager": "TASMAN Task Manager",
-
         "sort-by": "Sort by:",
         "id": "ID",
         "title": "Task Title",
@@ -54,7 +53,6 @@ const translations = {
     },
     pl: {
         "task-manager": "TASMAN Task Manager",
-        
         "sort-by": "Sortuj według:",
         "id": "ID",
         "title": "Tytuł zadania",
