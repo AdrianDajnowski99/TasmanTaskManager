@@ -33,7 +33,6 @@ def add_task():
     title = request.form['taskNameUpdate']
     description = request.form.get('taskDescription', " ")
     status = request.form['taskStatusAdd']
-
     current_date = datetime.now().strftime("[%d-%m-%Y] ")
     if description:
         description = f"{current_date} {description}"
@@ -109,7 +108,6 @@ def api_get_single_task(task_id):
         return jsonify("Task ID must be an integer."), 400
     
     task_id = int(task_id)
-    
     conn = db_conn.connect_to_db()
     cursor = conn.cursor()
     single_task = testing.get_single_task_by_id(cursor, task_id)
@@ -176,7 +174,6 @@ def api_add_task():
 
 @app.route('/api/tasks/<int:task_id>', methods=['PUT'])
 def api_edit_task(task_id):
-
     data = request.get_json()
     title = data.get('title')
     description = data.get('description', " ")
@@ -222,7 +219,6 @@ def api_edit_task(task_id):
 def api_update_task(title):
     data = request.get_json()
     status = data.get('status')
-
     conn = db_conn.connect_to_db()
     cursor = conn.cursor()
     try:

@@ -7,8 +7,6 @@ conn = db_conn.connect_to_db()
 database_name = "tasman2nd"
 status_inputs = ["To Do", "In Progress", "Done", "ND"]
 
-
-
 class AppStart:
     @staticmethod
     def main():
@@ -31,7 +29,6 @@ class SafeDatabaseExecutor:
             print(f"Unexpected error occurred: {e}")
 
 class DbControl:
-
     @staticmethod
     def generate_unique_task_id():
         now = datetime.datetime.now()

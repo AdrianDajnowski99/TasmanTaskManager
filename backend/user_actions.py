@@ -6,7 +6,6 @@ database_name = "tasks"
 invalid_input_output = "Invalid input. Please try again."
 
 class TaskManager:
-
     @staticmethod
     def display_interface_message():
         script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -55,8 +54,6 @@ class TaskManager:
         DbControl.show_tasks(cursor)
         cursor.close()
 
-
-
     @staticmethod
     def edit_task(db_connection):
         from database_control import DbControl
@@ -84,8 +81,6 @@ class TaskManager:
             print(f"DATABASE NOTIFICATION: Task (id: {task_id}) has been successfully updated in database.")
             break
         cursor.close()
-
-
 
     @staticmethod
     def update_task(db_connection):
