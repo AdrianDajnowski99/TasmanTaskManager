@@ -71,9 +71,7 @@ class DbControl:
     def get_all_existing_ids(cursor):
         cursor.execute(f"SELECT id FROM {database_name} ORDER BY id")
         ids = cursor.fetchall()
-        #print("Existing tasks IDs:")
-        for show_ids in ids:
-            return [show_ids[0] for show_ids in ids]
+        return [id[0] for id in ids]
 
     @staticmethod
     def normalize_status_input(task_status):

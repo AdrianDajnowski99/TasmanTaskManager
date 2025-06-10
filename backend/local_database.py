@@ -1,10 +1,10 @@
 import sqlite3
 import os
 from pathlib import Path
-from database_control import database_name
 
 class ConnectToLocalDb:
-    
+    DB_NAME = "local_tasman.db"
+
     @staticmethod
     def get_db_path():
         script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -14,27 +14,24 @@ class ConnectToLocalDb:
 
     @staticmethod
     def init_db():
-
+        from database_control import database_name
         db_path = ConnectToLocalDb.get_db_path()
         conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
         
-
         cursor.execute(f'''
-        CREATE TABLE IF NOT EXISTS {database_name} (
-            id TEXT PRIMARY KEY,
-            title TEXT NOT NULL,
-            description TEXT,
-            status TEXT NOT NULL
-        )
+            CREATE TABLE IF NOT EXISTS {database_name} (
+                id TEXT PRIMARY KEY,
+                title TEXT NOT NULL,
+                description optional TEXT,
+                status TEXT NOT NULL
+            )
         ''')
-        
         conn.commit()
         conn.close()
 
     @staticmethod
     def connect_to_db():
-
         db_path = ConnectToLocalDb.get_db_path()
 
         if not os.path.exists(db_path):
@@ -43,13 +40,11 @@ class ConnectToLocalDb:
 
     @staticmethod
     def disconnect_db(connection):
-
         if connection:
             connection.close()
 
     @staticmethod
     def is_online_db_available():
-
         try:
             from db_handling import DbHandling
             conn = DbHandling.connect_to_db()
@@ -60,7 +55,6 @@ class ConnectToLocalDb:
 
     @staticmethod
     def get_db_connection():
-
         if ConnectToLocalDb.is_online_db_available():
             from db_handling import DbHandling
             return DbHandling.connect_to_db()
