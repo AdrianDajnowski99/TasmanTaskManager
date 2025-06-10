@@ -1,24 +1,55 @@
 import sqlite3
 import os
 from pathlib import Path
+from database_control import database_name
 
 class ConnectToLocalDb:
-    DB_NAME = "local_tasman.db"
+    
+    @staticmethod
+    def get_db_path():
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        data_dir = os.path.join(script_dir, '..', 'data')
+        os.makedirs(data_dir, exist_ok=True)
+        return os.path.join(data_dir, ConnectToLocalDb.DB_NAME)
+
+    @staticmethod
+    def init_db():
+
+        db_path = ConnectToLocalDb.get_db_path()
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        
+
+        cursor.execute(f'''
+        CREATE TABLE IF NOT EXISTS {database_name} (
+            id TEXT PRIMARY KEY,
+            title TEXT NOT NULL,
+            description TEXT,
+            status TEXT NOT NULL
+        )
+        ''')
+        
+        conn.commit()
+        conn.close()
 
     @staticmethod
     def connect_to_db():
-        db_path = Path(r"C:\general_reps\Exercise1_tts\backend\emergency_local_database\local_tasman.db")
-        conn = sqlite3.connect(db_path)
-        return conn
-    
-    @staticmethod
-    def disconnect_db(connection):
-        if connection:
-            print("---Connection to database closed---")
-        connection.close()
+
+        db_path = ConnectToLocalDb.get_db_path()
+
+        if not os.path.exists(db_path):
+            ConnectToLocalDb.init_db()
+        return sqlite3.connect(db_path)
 
     @staticmethod
-    def is_main_db_online(connection):
+    def disconnect_db(connection):
+
+        if connection:
+            connection.close()
+
+    @staticmethod
+    def is_online_db_available():
+
         try:
             from db_handling import DbHandling
             conn = DbHandling.connect_to_db()
@@ -26,10 +57,11 @@ class ConnectToLocalDb:
             return True
         except Exception:
             return False
-        
+
     @staticmethod
-    def get_connection():
-        if ConnectToLocalDb.is_main_db_online():
+    def get_db_connection():
+
+        if ConnectToLocalDb.is_online_db_available():
             from db_handling import DbHandling
             return DbHandling.connect_to_db()
         else:

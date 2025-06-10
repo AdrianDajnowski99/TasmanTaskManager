@@ -1,4 +1,3 @@
-from local_database import ConnectToLocalDb as local_db
 from pathlib import Path
 import psycopg2
 from dotenv import load_dotenv
