@@ -4,14 +4,12 @@ import sys
 import os
 from unittest.mock import patch, MagicMock, ANY
 
-# Mock database connection before importing application
 with patch('psycopg2.connect') as mock_connect:
     mock_conn = MagicMock()
     mock_cursor = MagicMock()
     mock_connect.return_value = mock_conn
     mock_conn.cursor.return_value = mock_cursor
     
-    # Now import application after mocking the database connection
     import application
 
 class TestApplication(unittest.TestCase):
