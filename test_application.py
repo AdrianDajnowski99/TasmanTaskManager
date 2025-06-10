@@ -1,27 +1,32 @@
 import unittest
 from unittest import mock
-import application
+import sys
+import os
 from unittest.mock import patch, MagicMock, ANY
+
+with patch('psycopg2.connect') as mock_connect:
+    mock_conn = MagicMock()
+    mock_cursor = MagicMock()
+    mock_connect.return_value = mock_conn
+    mock_conn.cursor.return_value = mock_cursor
+    
+    import application
 
 class TestApplication(unittest.TestCase):
     def setUp(self):
         self.client = application.app.test_client()
         self.client.testing = True
-        self.setup_database()
+
+        # Mock database connection for all tests
+        self.db_patcher = patch('application.db_conn.connect_to_db')
+        self.mock_db = self.db_patcher.start()
+        self.mock_conn = MagicMock()
+        self.mock_cursor = MagicMock()
+        self.mock_db.return_value = self.mock_conn
+        self.mock_conn.cursor.return_value = self.mock_cursor
 
     def tearDown(self):
-        self.teardown_database()
-
-    def setup_database(self):
-        self.client.post('/api/tasks/', json={
-            'id': 51000000000000,
-            'title': 'TestTask',
-            'description': 'TestDesc',
-            'status': 'ND'
-        })
-
-    def teardown_database(self):
-        self.client.delete('/api/tasks/TestTask')
+        self.db_patcher.stop()
 
     def test_api_status(self):
         response = self.client.get('/api/tasks/status')
@@ -63,20 +68,18 @@ class TestApplication(unittest.TestCase):
         mock_get_all_tasks.assert_called_once_with(ANY, 'id', 'asc')
     # ------------------------------------------------------------
 
-    @patch('application.api_add_task')
-    def test_api_add_task(self, mock_api_add_task):
-        mock_api_add_task.return_value = {
-            'message': "Task added successfully"
-        }
+    @patch('application.controls.add_task')
+    def test_api_add_task(self, mock_add_task):
+        mock_add_task.return_value = None
+        
         response = self.client.post('/api/tasks/', json={
             'title': 'Test Task 0',
             'description': 'This is a test task',
             'status': 'ND'
         })
         self.assertEqual(response.status_code, 201)
-        self.assertEqual(response.json, {
-            'message': "Task added successfully"
-        })
+        self.assertEqual(response.json, {'message': 'Task added successfully'})
+        mock_add_task.assert_called_once()
     # ------------------------------------------------------------
 
     @patch('application.controls.get_all_existing_ids')
