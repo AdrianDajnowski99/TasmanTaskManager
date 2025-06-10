@@ -1,8 +1,11 @@
 import datetime
 import atexit
 import psycopg2
+import sqlite3
 from db_handling import DbHandling as db_conn
 from error_mapper import ErrorMapper
+from local_database import ConnectToLocalDb as local_db
+
 conn = db_conn.connect_to_db()
 database_name = "tasman2nd"
 status_inputs = ["To Do", "In Progress", "Done", "ND"]
@@ -20,9 +23,11 @@ class SafeDatabaseExecutor:
     def execute_errors_query(db_connection, action_query, params=None):
         try:
             cursor = db_connection.cursor()
+            if isinstance(db_connection, sqlite3.Connection):
+                action_query = action_query.replace('%s', '?')
             cursor.execute(action_query, params)
             db_connection.commit()
-        except psycopg2.Error as e:
+        except (psycopg2.Error, sqlite3.Error) as e:
             print(f"Error: {e}")
             print(ErrorMapper.get_error_message(e))
         except Exception as e:
@@ -36,8 +41,14 @@ class DbControl:
 
     @staticmethod
     def generate_unique_title(cursor, given_title):
-        title_query_check = (f"SELECT title FROM {database_name} WHERE title LIKE %s")
-        cursor.execute(title_query_check, (f"{given_title}%",))
+
+        if isinstance(cursor.connection, sqlite3.Connection):
+            title_query_check = f"SELECT title FROM {database_name} WHERE title LIKE ?"
+            cursor.execute(title_query_check, (f"{given_title}%",))
+        else:
+            title_query_check = f"SELECT title FROM {database_name} WHERE title LIKE %s"
+            cursor.execute(title_query_check, (f"{given_title}%",))
+            
         existing_titles = [row[0] for row in cursor.fetchall()]
 
         if given_title not in existing_titles:
@@ -54,10 +65,7 @@ class DbControl:
     def get_all_existing_titles(cursor):
         cursor.execute(f"SELECT title FROM {database_name} ORDER BY id")
         titles = cursor.fetchall()
-        #print("Existing tasks Titles:")
-        for show_titles in titles:
-            #print(show_titles[0])
-            return [show_titles[0] for show_titles in titles]
+        return [title[0] for title in titles]
     
     @staticmethod
     def get_all_existing_ids(cursor):
@@ -65,7 +73,6 @@ class DbControl:
         ids = cursor.fetchall()
         #print("Existing tasks IDs:")
         for show_ids in ids:
-            #print(show_ids[0])
             return [show_ids[0] for show_ids in ids]
 
     @staticmethod
@@ -83,7 +90,11 @@ class DbControl:
             normalized_status = DbControl.normalize_status_input(task_status)
             task_title = DbControl.generate_unique_title(cursor, title)
 
-            action_query = f"INSERT INTO {database_name} (id, title, description, status) VALUES (%s, %s, %s, %s)"
+            if isinstance(cursor.connection, sqlite3.Connection):
+                action_query = f"INSERT INTO {database_name} (id, title, description, status) VALUES (?, ?, ?, ?)"
+            else:
+                action_query = f"INSERT INTO {database_name} (id, title, description, status) VALUES (%s, %s, %s, %s)"
+                
             SafeDatabaseExecutor.execute_errors_query(cursor.connection, action_query, (task_id, task_title, description, normalized_status))
             
             return task_title
@@ -106,7 +117,12 @@ class DbControl:
     @staticmethod
     def edit_task(task_id, task_title, description, cursor):
         task_title = DbControl.generate_unique_title(cursor, task_title)
-        action_query = f"UPDATE {database_name} SET title = %s, description = %s WHERE id = %s;"
+
+        if isinstance(cursor.connection, sqlite3.Connection):
+            action_query = f"UPDATE {database_name} SET title = ?, description = ? WHERE id = ?;"
+        else:
+            action_query = f"UPDATE {database_name} SET title = %s, description = %s WHERE id = %s;"
+            
         SafeDatabaseExecutor.execute_errors_query(cursor.connection, action_query, (task_title, description, task_id))
         cursor.connection.commit()
         print(f"DATABASE NOTIFICATION: Task (id: {task_id}) has been successfully updated in database")
@@ -115,7 +131,12 @@ class DbControl:
     @staticmethod
     def update_task(task_status, task_title, cursor):
         normalized_status = DbControl.normalize_status_input(task_status)
-        action_query = f"UPDATE {database_name} SET status = %s WHERE title = %s;"
+
+        if isinstance(cursor.connection, sqlite3.Connection):
+            action_query = f"UPDATE {database_name} SET status = ? WHERE title = ?;"
+        else:
+            action_query = f"UPDATE {database_name} SET status = %s WHERE title = %s;"
+            
         SafeDatabaseExecutor.execute_errors_query(cursor.connection, action_query, (normalized_status, task_title))
         cursor.connection.commit()
         print(f"DATABASE NOTIFICATION: Task (name: {task_title}) has been successfully updated in database")
@@ -123,7 +144,12 @@ class DbControl:
     
     @staticmethod
     def delete_task(task_title, cursor):
-        action_query = f"DELETE FROM {database_name} WHERE title = %s;"
+
+        if isinstance(cursor.connection, sqlite3.Connection):
+            action_query = f"DELETE FROM {database_name} WHERE title = ?;"
+        else:
+            action_query = f"DELETE FROM {database_name} WHERE title = %s;"
+            
         SafeDatabaseExecutor.execute_errors_query(cursor.connection, action_query, (task_title,))
         cursor.connection.commit()
         print(f"DATABASE NOTIFICATION: Task (name: {task_title}) has been successfully deleted from the database")
@@ -143,7 +169,12 @@ class DbControl:
 class Testing:
     @staticmethod
     def get_single_task_by_id(cursor, task_id):
-        single_task_query=f"SELECT * FROM {database_name} WHERE id = %s"
+
+        if isinstance(cursor.connection, sqlite3.Connection):
+            single_task_query = f"SELECT * FROM {database_name} WHERE id = ?"
+        else:
+            single_task_query = f"SELECT * FROM {database_name} WHERE id = %s"
+            
         cursor.execute(single_task_query, (task_id,))
         single_task = cursor.fetchone()
         return single_task
