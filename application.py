@@ -13,8 +13,6 @@ app = Flask(__name__,
             template_folder='frontend/templates',  
             static_folder='frontend/static')       
 
-DATABASE = "tasman2nd"
-
 @app.route('/', methods=['GET'])
 def index():
     sort_by = request.args.get('sort_by', 'id')
