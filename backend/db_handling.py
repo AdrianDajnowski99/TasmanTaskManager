@@ -2,7 +2,7 @@ from pathlib import Path
 import psycopg2
 from dotenv import load_dotenv
 import os
-from local_database import ConnectToLocalDb as local_db
+
 
 load_dotenv()
 # DbHandling is responsible for opening and closing the database
@@ -21,8 +21,7 @@ class DbHandling:
             return conn
         except Exception as e:
             print("Unable to connect to database")
-            print("Switching to local database")
-            return local_db.connect_to_db()
+            raise e
 
     @staticmethod
     def disconnect_db(connection):
