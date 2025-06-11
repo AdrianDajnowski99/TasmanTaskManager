@@ -2,12 +2,16 @@ import datetime
 import atexit
 import psycopg2
 import sqlite3
+import os
 from db_handling import DbHandling as db_conn
 from error_mapper import ErrorMapper
 from local_database import ConnectToLocalDb as local_db
+from dotenv import load_dotenv
 
 conn = db_conn.connect_to_db()
-database_name = "tasman2nd"
+load_dotenv()
+DB_NAME = os.getenv("DB_NAME")
+database_name = DB_NAME
 status_inputs = ["To Do", "In Progress", "Done", "ND"]
 
 class AppStart:
