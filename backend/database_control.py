@@ -7,7 +7,7 @@ from error_mapper import ErrorMapper
 from local_database import ConnectToLocalDb as local_db
 
 conn = db_conn.connect_to_db()
-database_name = "tasman2nd"
+database_name = "tasmantaskmanagerdb" #remember to paste the correct database name
 status_inputs = ["To Do", "In Progress", "Done", "ND"]
 
 class AppStart:
