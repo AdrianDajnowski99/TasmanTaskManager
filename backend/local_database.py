@@ -60,3 +60,4 @@ class ConnectToLocalDb:
             return DbHandling.connect_to_db()
         else:
             return ConnectToLocalDb.connect_to_db()
+        

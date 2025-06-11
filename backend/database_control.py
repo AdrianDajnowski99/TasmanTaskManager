@@ -176,3 +176,4 @@ class Testing:
         cursor.execute(single_task_query, (task_id,))
         single_task = cursor.fetchone()
         return single_task
+    

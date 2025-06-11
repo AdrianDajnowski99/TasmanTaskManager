@@ -16,4 +16,3 @@ class ErrorMapper:
     @staticmethod
     def get_error_message(error):
         return ErrorMapper.error_codes.get(error, f'Unexpected error occurred: {error}')
-
