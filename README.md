@@ -39,7 +39,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-[![Product Name Screen Shot][product-screenshot]
+![Product Name Screen Shot][product-screenshot]
 
 **Tasman TaskManager** is a simple and intuitive application that allows users to create, edit, and delete tasks within a clear and organized table.
 
@@ -102,7 +102,7 @@ _Below is an example of how you can instruct your audience on installing and set
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p> -->
- -->
+ 
 
 
 <!-- USAGE EXAMPLES -->
