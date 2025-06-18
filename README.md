@@ -222,7 +222,7 @@ Use this space to list resources you find helpful and would like to give credit 
 [linkedin-url]: https://linkedin.com/in/othneildrew -->
 [license-shield]: https://img.shields.io/badge/license-MIT-brightgreen%5C
 [license-url]: https://github.com/AdrianDajnowski99/TasmanTaskManager/blob/main/LICENSE
-[product-screenshot]: frontend/static/TasmanReadme.png
+[product-screenshot]: frontend/static/TasmanTmReadme.png
 
 [Python.js]: https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54
 [Python-url]: https://www.python.org/
