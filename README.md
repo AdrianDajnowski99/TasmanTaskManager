@@ -5,6 +5,7 @@
 [![Unlicense License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url] -->
 
+## TASMAN Task Manager
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -37,7 +38,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-[![Product Name Screen Shot][product-screenshot]](frontend/static/TasmanReadme.png)
+[![Product Name Screen Shot][product-screenshot]
 
 **Tasman TaskManager** is a simple and intuitive application that allows users to create, edit, and delete tasks within a clear and organized table.
 
@@ -56,7 +57,7 @@ This section should list any major frameworks/libraries used to bootstrap your p
 * [![Python][Python.js]][Python-url]
 * [![Flask][Flask.js]][Flask-url]
 * [![PostgreSQL][PostgreSQL.js]][PostgreSQL-url]
-* [![Docker][Docke.js]][Docker-url]
+* [![Docker][Docker.js]][Docker-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -183,6 +184,8 @@ Contact me via [LinkedIn](https://www.linkedin.com/in/adrian-dajnowski-71b122286
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
+TasmanTaskManager 2025
+
 
 <!-- ACKNOWLEDGMENTS -->
 <!-- ## Acknowledgments
@@ -216,7 +219,7 @@ Use this space to list resources you find helpful and would like to give credit 
 [license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew -->
-<!-- [product-screenshot]: images/screenshot.png -->
+[product-screenshot]: frontend/static/TasmanReadme.png
 
 [Python.js]: https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54
 [Python-url]: https://www.python.org/
@@ -224,5 +227,5 @@ Use this space to list resources you find helpful and would like to give credit 
 [Flask-url]: https://flask.palletsprojects.com/en/stable/
 [PostgreSQL.js]: https://img.shields.io/badge/postgresql-4169e1?style=for-the-badge&logo=postgresql&logoColor=white
 [PostgreSQL-url]: https://www.postgresql.org/
-[Docker.js]:https://img.shields.io/badge/docker-257bd6?style=for-the-badge&logo=docker&logoColor=white
-[Docker-url]:https://www.docker.com/
+[Docker.js]: https://img.shields.io/badge/docker-257bd6?style=for-the-badge&logo=docker&logoColor=white
+[Docker-url]: https://www.docker.com/
