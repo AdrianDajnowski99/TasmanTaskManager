@@ -1,9 +1,9 @@
 <!-- [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
+[![Issues][issues-shield]][issues-url] -->
 [![Unlicense License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url] -->
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
 ## TASMAN Task Manager
 
@@ -38,7 +38,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-![Product Name Screen Shot][product-screenshot]
+[![Product Name Screen Shot][product-screenshot]
 
 **Tasman TaskManager** is a simple and intuitive application that allows users to create, edit, and delete tasks within a clear and organized table.
 
@@ -101,7 +101,7 @@ _Below is an example of how you can instruct your audience on installing and set
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p> -->
-
+ -->
 
 
 <!-- USAGE EXAMPLES -->
@@ -214,12 +214,12 @@ Use this space to list resources you find helpful and would like to give credit 
 [stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
 [stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
 [issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
+[issues-url]: https://github.com/othneildrew/Best-README-Template/issues -->
+[license-shield]: https://img.shields.io/badge/Licence-MIT-brightgreen
+[license-url]: https://github.com/AdrianDajnowski99/TasmanTaskManager/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew -->
-[product-screenshot]: frontend/static/TasmanTmReadme.png
+[linkedin-url]: https://www.linkedin.com/in/adrian-dajnowski-71b122286/
+[product-screenshot]: frontend/static/TasmanReadme.png
 
 [Python.js]: https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54
 [Python-url]: https://www.python.org/
