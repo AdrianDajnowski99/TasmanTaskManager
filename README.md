@@ -83,9 +83,9 @@ Below are the steps to download the Docker image and run the application locally
    ```docker
    docker pull adriandajnowski/tasman_task_manager_app    
    ```
-2. Run the Docker container:
+2. Run the Docker container. Replace <container_name> with a name you choose for the Docker container:
    ```docker
-   docker run -d --name 'container_name' -p 5005:5005 adriandajnowski/tasman_task_manager_app
+   docker run -d --name <container_name> -p 5005:5005 adriandajnowski/tasman_task_manager_app
    ```
 3. Open the application in your browser:
    ```http
@@ -93,8 +93,8 @@ Below are the steps to download the Docker image and run the application locally
    ```
 4. Stop or restart the container:
    ```docker
-   docker stop 'container_name'
-   docker start 'container_name'
+   docker stop <container_name>
+   docker start <container_name>
    ```
 
 
