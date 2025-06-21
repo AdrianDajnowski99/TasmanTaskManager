@@ -1,9 +1,10 @@
 <!-- [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url] -->
+[![Issues][issues-shield]][issues-url]
 [![Unlicense License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
+[![LinkedIn][linkedin-shield]][linkedin-url] -->
+[![MIT License][license-shield]][license-url]
 
 ## TASMAN Task Manager
 
@@ -38,7 +39,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-[![Product Name Screen Shot][product-screenshot]
+![Product Name Screen Shot][product-screenshot]
 
 **Tasman TaskManager** is a simple and intuitive application that allows users to create, edit, and delete tasks within a clear and organized table.
 
@@ -52,8 +53,6 @@ This application is ideal for managing daily tasks in a straightforward and effi
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-
 * [![Python][Python.js]][Python-url]
 * [![Flask][Flask.js]][Flask-url]
 * [![PostgreSQL][PostgreSQL.js]][PostgreSQL-url]
@@ -64,44 +63,42 @@ This section should list any major frameworks/libraries used to bootstrap your p
 
 
 <!-- GETTING STARTED -->
-<!-- ## Getting Started
+## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+To run the application locally follow these steps:
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+You need to have Docker installed on your machine.
+
+* **Docker**
+
+install Docker: [Docker.com][Docker-url]
 
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
+Below are the steps to download the Docker image and run the application locally using Docker.
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/github_username/repo_name.git
+1. Pull the image from Docker Hub:
+   ```docker
+   docker pull adriandajnowski/tasman_task_manager_app    
    ```
-3. Install NPM packages
-   ```sh
-   npm install
+2. Run the Docker container:
+   ```docker
+   docker run -d --name 'container_name' -p 5005:5005 adriandajnowski/tasman_task_manager_app
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
+3. Open the application in your browser:
+   ```http
+   http://localhost:5005
    ```
-5. Change git remote url to avoid accidental pushes to base project
-   ```sh
-   git remote set-url origin github_username/repo_name
-   git remote -v # confirm the changes
+4. Stop or restart the container:
+   ```docker
+   docker stop 'container_name'
+   docker start 'container_name'
    ```
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p> -->
- -->
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 
 <!-- USAGE EXAMPLES -->
@@ -128,7 +125,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 - [x] Migration to PostgreSQL and deployment to a remote server
 - [x] Unit testing (unittest) and Postman integration
 - [x] Dockerization of the application
-- [ ] Fixes for mobile responsiveness and display issues on mobile devices
+- [x] Fixes for mobile responsiveness and display issues on mobile devices
 - [ ] Add user authentication
 - [ ] Potential migration to Django (to be decided)
 
@@ -214,11 +211,13 @@ Use this space to list resources you find helpful and would like to give credit 
 [stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
 [stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
 [issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues -->
-[license-shield]: https://img.shields.io/badge/Licence-MIT-brightgreen
-[license-url]: https://github.com/AdrianDajnowski99/TasmanTaskManager/blob/main/LICENSE
+[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
+[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
+[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://www.linkedin.com/in/adrian-dajnowski-71b122286/
+[linkedin-url]: https://linkedin.com/in/othneildrew -->
+[license-shield]: https://img.shields.io/badge/license-MIT-brightgreen%5C
+[license-url]: https://github.com/AdrianDajnowski99/TasmanTaskManager/blob/main/LICENSE
 [product-screenshot]: frontend/static/TasmanReadme.png
 
 [Python.js]: https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54
