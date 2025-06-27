@@ -3,7 +3,7 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![Unlicense License][license-shield]][license-url]-->
-[![LinkedIn][linkedin-shield]][[https://www.linkedin.com/in/adrian-dajnowski-71b122286/]] 
+[![LinkedIn][linkedin-shield]][[linkedin-url]] 
 [![MIT License][license-shield]][license-url]
 
 ## TASMAN Task Manager
