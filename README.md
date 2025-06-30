@@ -1,8 +1,7 @@
 <!-- [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![Unlicense License][license-shield]][license-url]-->
+[![Issues][issues-shield]][issues-url]-->
 [![LinkedIn][linkedin-shield]][linkedin-url]
 [![MIT License][license-shield]][license-url]
 
