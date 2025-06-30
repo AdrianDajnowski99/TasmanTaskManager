@@ -12,7 +12,7 @@ body {
     padding-bottom: 80px;
 }
 main {
-    margin-bottom: 35px; /* Przestrzeń na stopkę (60px + ewentualna dodatkowa przestrzeń) */
+    margin-bottom: 35px; 
     flex: 1;
 }
 .container {
@@ -72,7 +72,7 @@ main {
 .table-container, table, th, td {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px; /* Dodaj margines od góry */
+    margin-top: 20px; 
     font-family: 'Helvetica', sans-serif;
 
 }
@@ -111,9 +111,9 @@ body {
     background-color: #f0f0f0;
 }
 .box-container {
-    border-radius: 10px;       /* Rounded corners for the box */
-    padding: 20px;             /* Padding around the table */
-    margin: 20px;              /* Add margin around the box */
+    border-radius: 10px;      
+    padding: 20px;            
+    margin: 20px;              
     font-family: 'Helvetica', sans-serif;
 }
 form {
@@ -142,16 +142,16 @@ button:hover {
 }
 .table-container {
     width: 100%;
-    max-height: 850px; /* Set the height of the scrollable area */
+    max-height: 850px;
     overflow-y: auto;
     border: 2px solid #000000;
-    background-color: rgba(78, 113, 255); /* Dopasowane do tła thead */
+    background-color: rgba(78, 113, 255); 
 }
     table {
     width: 100%;
     border-collapse: collapse;
     table-layout: fixed;
-    background-color: rgb(255, 255, 255); /* White background for the table */
+    background-color: rgb(255, 255, 255); 
     border-radius: 0px;
 }
 th, td {
@@ -168,11 +168,11 @@ thead {
     z-index: 1;
 }
 tbody {
-    max-height: auto; /* Adjust this for scrollable body height */
+    max-height: auto; 
     overflow-y: scroll;
 }
 th, td {
-    width: 25%; /* Ensure columns have the same width */
+    width: 25%; 
     box-sizing: border-box;
 }
 button:hover {
@@ -222,9 +222,9 @@ li {
     align-items: center;
     text-align: left;
     position: relative;
-    max-width: 50%; /* Change this to adjust the width */
+    max-width: 50%; 
     max-height: 80%;
-    overflow: auto; /* Add scrolling if content is too long */
+    overflow: auto; 
 }
 
 .overlay-content h2 {
@@ -254,10 +254,10 @@ li {
 }
 
 .close-btn:hover {
-    background: rgba(255, 255, 255, 0.2); /* Delikatne podświetlenie */
+    background: rgba(255, 255, 255, 0.2); 
 }
 
-/* Activate overlay */
+
 .overlay.active {
     display: flex;
 }
@@ -278,3 +278,102 @@ footer {
     bottom: 0;
 }
 
+/**/
+@media (max-width: 900px) {
+    .container {
+        flex-direction: column;
+        gap: 0;
+    }
+    .section-65-1,
+    .section-65-2,
+    .section-35-1,
+    .section-35-2 {
+        width: 100% !important;
+        min-width: 0;
+        margin-top: 10px;
+        height: auto;
+        max-height: none;
+        padding: 10px;
+        display: block;
+    }
+    .box-container {
+        margin: 10px 0;
+        padding: 10px;
+    }
+    form {
+        max-width: 100%;
+        padding: 10px;
+    }
+    .overlay-content {
+        max-width: 95%;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 600px) {
+    header, footer {
+        padding: 10px;
+        font-size: 16px;
+    }
+    h1 {
+        font-size: 28px;
+    }
+    h2 {
+        font-size: 18px;
+    }
+    .logo {
+        height: auto;
+        max-width: 90vw;
+    }
+    .table-container {
+        overflow-x: auto;
+        max-height: 400px;
+    }
+    table, thead, tbody, th, td, tr {
+        display: block;
+        width: 100%;
+    }
+    thead tr {
+        display: none;
+    }
+    tr {
+        margin-bottom: 1rem;
+        border-bottom: 1px solid #ccc;
+    }
+    td {
+        position: relative;
+        padding-left: 50%;
+        min-height: 32px;
+        border: none;
+        border-bottom: 1px solid #eee;
+        background: #fff;
+    }
+    td:before {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        width: 45%;
+        white-space: nowrap;
+        font-weight: bold;
+        color: #333;
+    }
+    td:nth-of-type(1):before { content: "ID"; }
+    td:nth-of-type(2):before { content: "Task Title"; }
+    td:nth-of-type(3):before { content: "Task Description"; }
+    td:nth-of-type(4):before { content: "Task Status"; }
+    th, td {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 10px 10px 10px 50%;
+    }
+    input, select, button {
+        font-size: 16px;
+        padding: 10px;
+        width: 100%;
+    }
+    .overlay-content {
+        font-size: 14px;
+        max-width: 99vw;
+        padding: 5px;
+    }
+}
