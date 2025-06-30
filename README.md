@@ -123,7 +123,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 - [x] Migration to PostgreSQL and deployment to a remote server
 - [x] Unit testing (unittest) and Postman integration
 - [x] Dockerization of the application
-- [ ] Fixes for mobile responsiveness and display issues on mobile devices
+- [x] Fixes for mobile responsiveness and display issues on mobile devices
 - [ ] Add user authentication
 - [ ] Potential migration to Django (to be decided)
 
