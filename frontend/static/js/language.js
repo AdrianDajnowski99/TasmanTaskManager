@@ -92,14 +92,14 @@ const translations = {
         "error-title": "MOŻLIWE KODY BŁĘDÓW:",
         "error-301": "Błąd 301 - Błąd wartości",
         "error-302": "Błąd 302 - Plik nie znaleziony",
-        "error-303": "Błąd operacyjny",
-        "error-304": "Błąd bazy danych",
-        "error-305": "Błąd integralności",
-        "error-306": "Błąd składni lub nieprawidłowa operacja",
-        "error-307": "Błąd danych",
-        "error-308": "Niezdefiniowany problem niekrytyczny",
-        "error-309": "Błąd połączenia z bazą danych",
-        "error-399": "Błąd nieobsługiwany",
+        "error-303": "Błąd 303 - Błąd operacyjny",
+        "error-304": "Bład 304 - Błąd bazy danych",
+        "error-305": "Bład 305 - Błąd integralności",
+        "error-306": "Bład 306 - Błąd składni lub nieprawidłowa operacja",
+        "error-307": "Bład 307 - Błąd danych",
+        "error-308": "Bład 308 - Niezdefiniowany problem niekrytyczny",
+        "error-309": "Bład 309 - Błąd połączenia z bazą danych",
+        "error-399": "Bład 399 - Błąd nieobsługiwany",
         "all-rights-reserved": "TASMAN Task Manager. Wszystkie prawa zastrzeżone."
     }
 };
