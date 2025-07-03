@@ -2,7 +2,7 @@ import datetime
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'backend')))
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, redirect, url_for, jsonify, make_response
 from backend.db_handling import DbHandling as db_conn
 from backend.database_control import DbControl as controls
 from backend.database_control import Testing as testing
@@ -24,7 +24,9 @@ def index():
     existing_ids = controls.get_all_existing_ids(cursor)
     cursor.close()
     db_conn.disconnect_db(conn)
-    return render_template('index.html', tasks=tasks, sort_by=sort_by, order=order, existing_ids=existing_ids, existing_titles=existing_titles)
+    return make_response(render_template('access_denied.html'), 401, {'WWW-Authenticate': 'Basic realm="LOGIN REQUIRED"'})
+    # return make_response(render_template('index.html', tasks=tasks, sort_by=sort_by, order=order, existing_ids=existing_ids, existing_titles=existing_titles)
+    #                      , 401, {'WWW-Authenticate': 'Basic realm="LOGIN REQUIRED"'})
 
 @app.route('/add', methods=['POST'])
 def add_task():

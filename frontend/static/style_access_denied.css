@@ -1,0 +1,22 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('background_white.jpg');
+    background-size: cover;
+    background-position: center;
+    background-size: 2944px 1644px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: rgb(0, 0, 0);
+    padding-bottom: 80px;
+}
+h1 {
+    font-family: 'Helvetica', sans-serif;
+    margin-left: 10px;
+}
+p {
+    font-family: 'Helvetica', sans-serif;
+    margin-left: 10px;
+    color: red;
+}
