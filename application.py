@@ -7,6 +7,7 @@ from backend.db_handling import DbHandling as db_conn
 from backend.database_control import DbControl as controls
 from backend.database_control import Testing as testing
 from backend.database_control import status_inputs as status_inputs
+from backend.utils import authentication_required as auth_required
 from datetime import datetime
 
 app = Flask(__name__, 
@@ -14,6 +15,7 @@ app = Flask(__name__,
             static_folder='frontend/static')       
 
 @app.route('/', methods=['GET'])
+@auth_required
 def index():
     sort_by = request.args.get('sort_by', 'id')
     order = request.args.get('order', 'asc')
@@ -24,9 +26,8 @@ def index():
     existing_ids = controls.get_all_existing_ids(cursor)
     cursor.close()
     db_conn.disconnect_db(conn)
-    return make_response(render_template('access_denied.html'), 401, {'WWW-Authenticate': 'Basic realm="LOGIN REQUIRED"'})
-    # return make_response(render_template('index.html', tasks=tasks, sort_by=sort_by, order=order, existing_ids=existing_ids, existing_titles=existing_titles)
-    #                      , 401, {'WWW-Authenticate': 'Basic realm="LOGIN REQUIRED"'})
+    return render_template('index.html', tasks=tasks, sort_by=sort_by, order=order, existing_ids=existing_ids, existing_titles=existing_titles)
+    
 
 @app.route('/add', methods=['POST'])
 def add_task():
