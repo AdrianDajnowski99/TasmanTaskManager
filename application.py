@@ -2,8 +2,9 @@ import datetime
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'backend')))
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, redirect, url_for, jsonify, make_response
 from backend.db_handling import DbHandling as db_conn
+from backend.utils import authentication_required as auth_required
 from backend.database_control import DbControl as controls
 from backend.database_control import Testing as testing
 from backend.database_control import status_inputs as status_inputs
@@ -11,9 +12,12 @@ from datetime import datetime
 
 app = Flask(__name__, 
             template_folder='frontend/templates',  
-            static_folder='frontend/static')       
+            static_folder='frontend/static')  
+
+app.config.from_prefixed_env()     
 
 @app.route('/', methods=['GET'])
+@auth_required
 def index():
     sort_by = request.args.get('sort_by', 'id')
     order = request.args.get('order', 'asc')
@@ -25,8 +29,10 @@ def index():
     cursor.close()
     db_conn.disconnect_db(conn)
     return render_template('index.html', tasks=tasks, sort_by=sort_by, order=order, existing_ids=existing_ids, existing_titles=existing_titles)
+    
 
 @app.route('/add', methods=['POST'])
+@auth_required
 def add_task():
     title = request.form['taskNameUpdate']
     description = request.form.get('taskDescription', " ")
@@ -49,6 +55,7 @@ def add_task():
     return redirect(url_for('index'))
 
 @app.route('/edit', methods=['POST'])
+@auth_required
 def edit_task():
     id = request.form['taskIdEdit']
     title = request.form['taskNameEdit']
@@ -69,6 +76,7 @@ def edit_task():
     return redirect(url_for('index'))
 
 @app.route('/update', methods=['POST'])
+@auth_required
 def update_task():
     title = request.form['taskNameUpdate']
     status = request.form['taskStatusUpdate']
@@ -85,6 +93,7 @@ def update_task():
     return redirect(url_for('index'))
 
 @app.route('/delete', methods=['POST'])
+@auth_required
 def delete_task():
     title = request.form['taskNameDelete']
 

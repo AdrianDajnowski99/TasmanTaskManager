@@ -123,7 +123,8 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 - [x] Unit testing (unittest) and Postman integration
 - [x] Dockerization of the application
 - [x] Fixes for mobile responsiveness and display issues on mobile devices
-- [ ] Add user authentication
+- [x] Add simple user authentication
+- [ ] Add advanced user authentication
 - [ ] Potential migration to Django (to be decided)
 
 
