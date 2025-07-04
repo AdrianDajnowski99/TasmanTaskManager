@@ -2,7 +2,9 @@ import datetime
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'backend')))
-from flask import Flask, render_template, request, redirect, url_for, jsonify, make_response
+from flask import Flask, render_template, request, redirect, url_for, jsonify, url_for
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
 from backend.db_handling import DbHandling as db_conn
 from backend.utils import authentication_required as auth_required
 from backend.database_control import DbControl as controls
@@ -13,8 +15,17 @@ from datetime import datetime
 app = Flask(__name__, 
             template_folder='frontend/templates',  
             static_folder='frontend/static')  
-
+# user_db = SQLAlchemy(app)
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+# app.config['SECRET_KEY'] = 'R8X1MZK9WQ69TV2BTAUEY6NFDGCH05SX78213MKT7LE'
 app.config.from_prefixed_env()     
+
+# class User(user_db.Model, UserMixin):
+#     user_database_id = user_db.Column (user_db.Integer, primary_key=True)
+#     username = user_db.Column(user_db.String(20), nullable=False)
+#     password = user_db.Column(user_db.String(80), nullable=False)
+
+    
 
 @app.route('/', methods=['GET'])
 @auth_required
@@ -30,6 +41,17 @@ def index():
     db_conn.disconnect_db(conn)
     return render_template('index.html', tasks=tasks, sort_by=sort_by, order=order, existing_ids=existing_ids, existing_titles=existing_titles)
     
+# @app.route('/home')
+# def home():
+#     return render_template('home.html')
+
+# @app.route('/login')
+# def login():
+#     return render_template('login.html')
+
+# @app.route('/register')
+# def register():
+#     return render_template('register.html')
 
 @app.route('/add', methods=['POST'])
 @auth_required
