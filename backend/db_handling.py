@@ -2,7 +2,6 @@ from pathlib import Path
 import psycopg2
 from dotenv import load_dotenv
 import os
-print("Current working directory:", os.getcwd())
 
 load_dotenv()
 # DbHandling is responsible for opening and closing the database

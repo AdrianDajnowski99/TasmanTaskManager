@@ -18,7 +18,7 @@ app = Flask(__name__,
 # user_db = SQLAlchemy(app)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 # app.config['SECRET_KEY'] = 'R8X1MZK9WQ69TV2BTAUEY6NFDGCH05SX78213MKT7LE'
-# app.config.from_prefixed_env()     
+app.config.from_prefixed_env()     
 
 # class User(user_db.Model, UserMixin):
 #     user_database_id = user_db.Column (user_db.Integer, primary_key=True)
@@ -28,7 +28,7 @@ app = Flask(__name__,
     
 
 @app.route('/', methods=['GET'])
-# @auth_required
+@auth_required
 def index():
     sort_by = request.args.get('sort_by', 'id')
     order = request.args.get('order', 'asc')
@@ -41,20 +41,20 @@ def index():
     db_conn.disconnect_db(conn)
     return render_template('index.html', tasks=tasks, sort_by=sort_by, order=order, existing_ids=existing_ids, existing_titles=existing_titles)
     
-@app.route('/home')
-def home():
-    return render_template('home.html')
+# @app.route('/home')
+# def home():
+#     return render_template('home.html')
 
-@app.route('/login')
-def login():
-    return render_template('login.html')
+# @app.route('/login')
+# def login():
+#     return render_template('login.html')
 
-@app.route('/register')
-def register():
-    return render_template('register.html')
+# @app.route('/register')
+# def register():
+#     return render_template('register.html')
 
 @app.route('/add', methods=['POST'])
-# @auth_required
+@auth_required
 def add_task():
     title = request.form['taskNameUpdate']
     description = request.form.get('taskDescription', " ")
@@ -77,7 +77,7 @@ def add_task():
     return redirect(url_for('index'))
 
 @app.route('/edit', methods=['POST'])
-#@auth_required
+@auth_required
 def edit_task():
     id = request.form['taskIdEdit']
     title = request.form['taskNameEdit']
@@ -98,7 +98,7 @@ def edit_task():
     return redirect(url_for('index'))
 
 @app.route('/update', methods=['POST'])
-#@auth_required
+@auth_required
 def update_task():
     title = request.form['taskNameUpdate']
     status = request.form['taskStatusUpdate']
@@ -115,7 +115,7 @@ def update_task():
     return redirect(url_for('index'))
 
 @app.route('/delete', methods=['POST'])
-#@auth_required
+@auth_required
 def delete_task():
     title = request.form['taskNameDelete']
 
