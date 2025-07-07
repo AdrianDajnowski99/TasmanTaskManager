@@ -41,17 +41,17 @@ def index():
     db_conn.disconnect_db(conn)
     return render_template('index.html', tasks=tasks, sort_by=sort_by, order=order, existing_ids=existing_ids, existing_titles=existing_titles)
     
-# @app.route('/home')
-# def home():
-#     return render_template('home.html')
+@app.route('/home')
+def home():
+    return render_template('home.html')
 
-# @app.route('/login')
-# def login():
-#     return render_template('login.html')
+@app.route('/login')
+def login():
+    return render_template('login.html')
 
-# @app.route('/register')
-# def register():
-#     return render_template('register.html')
+@app.route('/register')
+def register():
+    return render_template('register.html')
 
 @app.route('/add', methods=['POST'])
 @auth_required
