@@ -82,6 +82,13 @@ body {
     display: flex;
     flex-direction: column;
 }
+input, select, button {
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
 button {
     background-color: #5cb85c;
     color: white;
