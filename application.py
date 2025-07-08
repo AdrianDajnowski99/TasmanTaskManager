@@ -53,6 +53,10 @@ def login():
 def register():
     return render_template('register.html')
 
+@app.route('/denied')
+def denied():
+    return render_template('denied.html')
+
 @app.route('/add', methods=['POST'])
 @auth_required
 def add_task():
