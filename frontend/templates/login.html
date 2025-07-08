@@ -3,20 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="{{ url_for('static', filename='newfavicon.png') }}" type="image/png">    
-    <title>Login</title>
+    <title>TASMAN - Login</title>
+    <link rel="icon" href="{{ url_for('static', filename='newfavicon.png') }}" type="image/png">     
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_login.css') }}">   
+    <script>
+    window.onload = function () {
+        var today = new Date();
+        var dateStr = today.toLocaleDateString('en-US');
+        document.getElementById("current-date").innerHTML = dateStr;
+    };
+    </script>
 </head>
 <body>
-    <h1>Login</h1>
 
-<form method="post" action="/add">
-    <label>Username:</label>
-    <input type="text" required>
-    <label>Password:</label>
-    <input type="text" required>
-    <button>Login In</button>
-        </form>
+    <header>
+        <img src="{{ url_for('static', filename='header_logo.png') }}" alt="Logo" class="logo">
+        <p class="date" span id="current-date"></span></p>
+    </header>
 
-    <a href="{{url_for('register')}}">Don't have an account? Sign Up</a>
+    <main>
+        <div class="container">
+            <div class="centered-container">
+                <h1>Login</h1>
+                <br>
+                <h2>Login to existing account to start using TASMAN Task Manager</h2>
+                <br>
+                <br>
+                <label for="username" data-lang="login">Username:</label>
+                <input type="text" id="username" name="login" placeholder="tasman_user" required>
+                <label for="password" data-lang="password">Password (8 characters minimum):</label>
+                <input type="password" id="password" name="password" minlength="8" placeholder="user_password" required>
+                <button type="button" id="Login" data-lang="login">LOG IN</button>
+                <a href="{{url_for('register')}}">Don't have an account? Create one</a><br>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+    <p>2025 © All rights reserved.</span></p>
+    </footer>
+
 </body>
 </html>
