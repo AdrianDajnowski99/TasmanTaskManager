@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TASMAN - User Authentication</title>
+    <link rel="icon" href="{{ url_for('static', filename='newfavicon.png') }}" type="image/png">     
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_denied.css') }}">   
+    <script>
+    window.onload = function () {
+        var today = new Date();
+        var dateStr = today.toLocaleDateString('en-US');
+        document.getElementById("current-date").innerHTML = dateStr;
+    };
+    </script>
+</head>
+<body>
+
+    <header>
+        <img src="{{ url_for('static', filename='header_logo.png') }}" alt="Logo" class="logo">
+        <p class="date" span id="current-date"></span></p>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="centered-container">
+                <h1>Access Denied!</h1>
+                <br>
+                <h2>We're sorry, but you do not have permission to use the application.</h2>
+                <h2>Please create an account, log in to an existing account, or contact the administrator!</h2>
+                <br>
+                <a href="{{url_for('home')}}">Return to Home page</a><br>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+    <p>2025 © All rights reserved.</span></p>
+    </footer>
+
+    <!-- <script src="{{ url_for('static', filename='js/auth.js') }}"></script> -->
+</body>
+</html>

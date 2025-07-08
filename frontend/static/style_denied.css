@@ -76,8 +76,9 @@ p {
 }
 .centered-container a {
     color: #d8f7d8;
-    font-size: 16px;
+    font-size: 18px;
     text-decoration: underline; 
+    font-weight: bold;
 }
 .logo {
     max-width: 100%;
@@ -106,12 +107,6 @@ input, select, button {
     padding: 10px;
     font-size: 35px;
     box-sizing: border-box;
-}
-label {
-    margin: 0;
-    font-size: 20px;
-    color: rgb(255, 255, 255);
-    font-weight: bold;
 }
 button {
     background-color: #5cb85c;
