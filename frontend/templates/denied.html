@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TASMAN - User Authentication</title>
     <link rel="icon" href="{{ url_for('static', filename='newfavicon.png') }}" type="image/png">     
-    <link rel="stylesheet" href="{{ url_for('static', filename='style_home.css') }}">   
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_denied.css') }}">   
     <script>
     window.onload = function () {
         var today = new Date();
@@ -28,6 +28,8 @@
                 <br>
                 <h2>We're sorry, but you do not have permission to use the application.</h2>
                 <h2>Please create an account, log in to an existing account, or contact the administrator!</h2>
+                <br>
+                <a href="{{url_for('home')}}">Return to Home page</a><br>
             </div>
         </div>
     </main>
