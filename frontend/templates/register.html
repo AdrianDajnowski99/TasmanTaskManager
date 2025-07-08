@@ -3,12 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="{{ url_for('static', filename='newfavicon.png') }}" type="image/png">  
-    <title>Sign In</title>
+    <title>TASMAN - Register</title>
+    <link rel="icon" href="{{ url_for('static', filename='newfavicon.png') }}" type="image/png">     
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_register.css') }}">   
+    <script>
+    window.onload = function () {
+        var today = new Date();
+        var dateStr = today.toLocaleDateString('en-US');
+        document.getElementById("current-date").innerHTML = dateStr;
+    };
+    </script>
 </head>
 <body>
-    <h1>Sign In</h1>
-    <a href="{{url_for('login')}}">Already have an account? Log In</a><br>
+
+    <header>
+        <img src="{{ url_for('static', filename='header_logo.png') }}" alt="Logo" class="logo">
+        <p class="date" span id="current-date"></span></p>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="centered-container">
+                <h1>Register</h1>
+                <br>
+                <h2>Register new account to start using TASMAN Task Manager</h2>
+                <br>
+                <br>
+                <label for="username" data-lang="login">Username:</label>
+                <input type="text" id="username" name="login" placeholder="new_tasman_user" required>
+                <label for="password" data-lang="password">Password (8 characters minimum):</label>
+                <input type="password" id="password" name="password" minlength="8" placeholder="new_user_password" required>
+                <label for="password" data-lang="password">Confirm password:</label>
+                <input type="password" id="password" name="password" minlength="8" placeholder="confirm_password" required>
+                <button type="button" id="Login" data-lang="login">SIGN IN</button>
+                <a href="{{url_for('login')}}">Already have an account? Login!</a><br>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+    <p>2025 © All rights reserved.</span></p>
+    </footer>
 
 </body>
 </html>
