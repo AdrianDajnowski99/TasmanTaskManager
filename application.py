@@ -6,7 +6,6 @@ from flask import Flask, render_template, request, redirect, url_for, jsonify, u
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from backend.db_handling import DbHandling as db_conn
-from backend.utils import authentication_required as auth_required
 from backend.database_control import DbControl as controls
 from backend.database_control import Testing as testing
 from backend.database_control import status_inputs as status_inputs
@@ -16,13 +15,8 @@ app = Flask(__name__,
             template_folder='frontend/templates',  
             static_folder='frontend/static')  
 
-# app.config.from_prefixed_env()     
-
-
-    
 
 @app.route('/', methods=['GET'])
-
 def index():
     sort_by = request.args.get('sort_by', 'id')
     order = request.args.get('order', 'asc')
