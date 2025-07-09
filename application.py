@@ -1,20 +1,22 @@
 import datetime
 import sys
 import os
+from dotenv import load_dotenv
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'backend')))
-from flask import Flask, render_template, request, redirect, url_for, jsonify, url_for
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin
+from flask import Flask, render_template, request, redirect, url_for, jsonify, url_for, session, flash
+from backend.user_auth import create_user, verify_user
 from backend.db_handling import DbHandling as db_conn
 from backend.database_control import DbControl as controls
 from backend.database_control import Testing as testing
 from backend.database_control import status_inputs as status_inputs
 from datetime import datetime
 
+load_dotenv()
+
 app = Flask(__name__, 
             template_folder='frontend/templates',  
-            static_folder='frontend/static')  
-
+            static_folder='frontend/static') 
+app.secret_key = 'SECRET_KEY'
 
 @app.route('/', methods=['GET'])
 def index():
