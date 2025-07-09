@@ -1,34 +1,79 @@
 import datetime
 import sys
 import os
+from dotenv import load_dotenv
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'backend')))
-from flask import Flask, render_template, request, redirect, url_for, jsonify, url_for
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin
+from flask import Flask, render_template, request, redirect, url_for, jsonify, url_for, session, flash
+from backend.user_auth import UserAuthentication as auth
 from backend.db_handling import DbHandling as db_conn
-from backend.utils import authentication_required as auth_required
 from backend.database_control import DbControl as controls
 from backend.database_control import Testing as testing
 from backend.database_control import status_inputs as status_inputs
 from datetime import datetime
 
+load_dotenv()
+
 app = Flask(__name__, 
             template_folder='frontend/templates',  
-            static_folder='frontend/static')  
-# user_db = SQLAlchemy(app)
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-# app.config['SECRET_KEY'] = 'R8X1MZK9WQ69TV2BTAUEY6NFDGCH05SX78213MKT7LE'
-app.config.from_prefixed_env()     
-
-# class User(user_db.Model, UserMixin):
-#     user_database_id = user_db.Column (user_db.Integer, primary_key=True)
-#     username = user_db.Column(user_db.String(20), nullable=False)
-#     password = user_db.Column(user_db.String(80), nullable=False)
+            static_folder='frontend/static') 
+app.secret_key = 'SECRET_KEY'
 
     
+@app.route('/home')
+def home():
+    return render_template('home.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if auth.verify_user(username, password):
+            session['username'] = username
+            return redirect(url_for('index'))
+        else:
+            flash('Invalid username or password')
+            return render_template('login.html')
+    return render_template('login.html')
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        confirm = request.form['confirm_password']
+        if password != confirm:
+            flash('Passwords do not match')
+            return render_template('register.html')
+        try:
+            auth.create_user(username, password)
+            flash('Registration successful. Please log in.')
+            return redirect(url_for('login'))
+        except Exception as e:
+            flash('Username already exists')
+            return render_template('register.html')
+    return render_template('register.html')
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('login'))
+
+def login_required(f):
+    from functools import wraps
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'username' not in session:
+            return redirect(url_for('home'))
+        return f(*args, **kwargs)
+    return decorated_function
+
+@app.route('/denied')
+def denied():
+    return render_template('denied.html')
 
 @app.route('/', methods=['GET'])
-@auth_required
+@login_required
 def index():
     sort_by = request.args.get('sort_by', 'id')
     order = request.args.get('order', 'asc')
@@ -39,26 +84,11 @@ def index():
     existing_ids = controls.get_all_existing_ids(cursor)
     cursor.close()
     db_conn.disconnect_db(conn)
-    return render_template('index.html', tasks=tasks, sort_by=sort_by, order=order, existing_ids=existing_ids, existing_titles=existing_titles)
-    
-@app.route('/home')
-def home():
-    return render_template('home.html')
+    username = session.get('username')
+    return render_template('index.html', tasks=tasks, username=username, sort_by=sort_by, order=order, existing_ids=existing_ids, existing_titles=existing_titles)
 
-@app.route('/login')
-def login():
-    return render_template('login.html')
-
-@app.route('/register')
-def register():
-    return render_template('register.html')
-
-@app.route('/denied')
-def denied():
-    return render_template('denied.html')
 
 @app.route('/add', methods=['POST'])
-@auth_required
 def add_task():
     title = request.form['taskNameUpdate']
     description = request.form.get('taskDescription', " ")
@@ -81,7 +111,7 @@ def add_task():
     return redirect(url_for('index'))
 
 @app.route('/edit', methods=['POST'])
-@auth_required
+
 def edit_task():
     id = request.form['taskIdEdit']
     title = request.form['taskNameEdit']
@@ -102,7 +132,7 @@ def edit_task():
     return redirect(url_for('index'))
 
 @app.route('/update', methods=['POST'])
-@auth_required
+
 def update_task():
     title = request.form['taskNameUpdate']
     status = request.form['taskStatusUpdate']
@@ -119,7 +149,7 @@ def update_task():
     return redirect(url_for('index'))
 
 @app.route('/delete', methods=['POST'])
-@auth_required
+
 def delete_task():
     title = request.form['taskNameDelete']
 

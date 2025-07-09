@@ -29,14 +29,16 @@
                 <h2>Register new account to start using TASMAN Task Manager</h2>
                 <br>
                 <br>
-                <label for="username" data-lang="login">Username:</label>
-                <input type="text" id="username" name="login" placeholder="new_tasman_user" required>
-                <label for="password" data-lang="password">Password (8 characters minimum):</label>
-                <input type="password" id="password" name="password" minlength="8" placeholder="new_user_password" required>
-                <label for="password" data-lang="password">Confirm password:</label>
-                <input type="password" id="password" name="password" minlength="8" placeholder="confirm_password" required>
-                <button type="button" id="Login" data-lang="login">SIGN IN</button>
-                <a href="{{url_for('login')}}">Already have an account? Login!</a><br>
+                    <form method="post" action="{{ url_for('register') }}">
+                        <label for="username" data-lang="login">Username:</label>
+                        <input type="text" id="username" name="username" placeholder="new_tasman_user" required>
+                        <label for="password" data-lang="password">Password (8 characters minimum):</label>
+                        <input type="password" id="password" name="password" minlength="8" placeholder="new_user_password" required>
+                        <label for="confirm_password" data-lang="password">Confirm password:</label>
+                        <input type="password" id="confirm_password" name="confirm_password" minlength="8" placeholder="confirm_password" required>
+                        <button type="submit" id="register" data-lang="register">SIGN IN</button>
+                        <a href="{{url_for('login')}}">Already have an account? Login!</a><br>
+                    </form>
             </div>
         </div>
     </main>
