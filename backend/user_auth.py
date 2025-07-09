@@ -9,7 +9,7 @@ class UserAuthentication:
         conn = db_conn.connect_to_db()
         cursor = conn.cursor()
         password_hash = generate_password_hash(password)
-        auth_query = f"INSERT INTO users (username, password_hash) VALUES (%s, %s)"
+        auth_query = f"INSERT INTO private.users (username, password_hash) VALUES (%s, %s)"
         cursor.execute(auth_query, (username, password_hash))
         conn.commit()
         cursor.close()
@@ -20,7 +20,7 @@ class UserAuthentication:
     def get_user_by_username(username):
         conn = db_conn.connect_to_db()
         cursor = conn.cursor()
-        auth_query = f"SELECT id, username, password_hash FROM users WHERE username = %s"
+        auth_query = f"SELECT id, username, password_hash FROM private.users WHERE username = %s"
         cursor.execute(auth_query, (username,))
         user = cursor.fetchone()
         cursor.close()

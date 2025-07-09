@@ -29,12 +29,14 @@
                 <h2>Login to existing account to start using TASMAN Task Manager</h2>
                 <br>
                 <br>
-                <label for="username" data-lang="login">Username:</label>
-                <input type="text" id="username" name="login" placeholder="tasman_user" required>
-                <label for="password" data-lang="password">Password (8 characters minimum):</label>
-                <input type="password" id="password" name="password" minlength="8" placeholder="user_password" required>
-                <button type="button" id="Login" data-lang="login">LOG IN</button>
-                <a href="{{url_for('register')}}">Don't have an account? Create one!</a><br>
+                <form method="post" action="{{ url_for('login') }}">
+                    <label for="username" data-lang="login">Username:</label>
+                    <input type="text" id="username" name="username" placeholder="tasman_user" required>
+                    <label for="password" data-lang="password">Password (8 characters minimum):</label>
+                    <input type="password" id="password" name="password" minlength="8" placeholder="user_password" required>
+                    <button type="submit" id="Login" data-lang="login">LOG IN</button>
+                    <a href="{{url_for('register')}}">Don't have an account? Create one!</a><br>
+                </form>    
             </div>
         </div>
     </main>

@@ -44,6 +44,7 @@
                 <div class="box-container">
                         <button id="language-switch" onclick="switchLanguage()">Language/Język</button>
                         <button type="button" id="Select_Help" data-lang="help">Help</button>
+                        <button type="button" id="logout" >Log Out</button>
                 </div>
             </div>
         </div>
@@ -199,5 +200,6 @@
     
     <script src="{{ url_for('static', filename='js/operations.js') }}"></script>
     <script src="{{ url_for('static', filename='js/language.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
 </body>
 </html>

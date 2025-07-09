@@ -4,7 +4,7 @@ import os
 from dotenv import load_dotenv
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'backend')))
 from flask import Flask, render_template, request, redirect, url_for, jsonify, url_for, session, flash
-from backend.user_auth import create_user, verify_user
+from backend.user_auth import UserAuthentication as auth
 from backend.db_handling import DbHandling as db_conn
 from backend.database_control import DbControl as controls
 from backend.database_control import Testing as testing
@@ -18,7 +18,62 @@ app = Flask(__name__,
             static_folder='frontend/static') 
 app.secret_key = 'SECRET_KEY'
 
+    
+@app.route('/home')
+def home():
+    return render_template('home.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if auth.verify_user(username, password):
+            session['username'] = username
+            return redirect(url_for('index'))
+        else:
+            flash('Invalid username or password')
+            return render_template('login.html')
+    return render_template('login.html')
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        confirm = request.form['confirm_password']
+        if password != confirm:
+            flash('Passwords do not match')
+            return render_template('register.html')
+        try:
+            auth.create_user(username, password)
+            flash('Registration successful. Please log in.')
+            return redirect(url_for('login'))
+        except Exception as e:
+            flash('Username already exists')
+            return render_template('register.html')
+    return render_template('register.html')
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('login'))
+
+def login_required(f):
+    from functools import wraps
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'username' not in session:
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated_function
+
+@app.route('/denied')
+def denied():
+    return render_template('denied.html')
+
 @app.route('/', methods=['GET'])
+@login_required
 def index():
     sort_by = request.args.get('sort_by', 'id')
     order = request.args.get('order', 'asc')
@@ -30,25 +85,9 @@ def index():
     cursor.close()
     db_conn.disconnect_db(conn)
     return render_template('index.html', tasks=tasks, sort_by=sort_by, order=order, existing_ids=existing_ids, existing_titles=existing_titles)
-    
-@app.route('/home')
-def home():
-    return render_template('home.html')
 
-@app.route('/login')
-def login():
-    return render_template('login.html')
-
-@app.route('/register')
-def register():
-    return render_template('register.html')
-
-@app.route('/denied')
-def denied():
-    return render_template('denied.html')
 
 @app.route('/add', methods=['POST'])
-
 def add_task():
     title = request.form['taskNameUpdate']
     description = request.form.get('taskDescription', " ")
