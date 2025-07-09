@@ -84,7 +84,8 @@ def index():
     existing_ids = controls.get_all_existing_ids(cursor)
     cursor.close()
     db_conn.disconnect_db(conn)
-    return render_template('index.html', tasks=tasks, sort_by=sort_by, order=order, existing_ids=existing_ids, existing_titles=existing_titles)
+    username = session.get('username')
+    return render_template('index.html', tasks=tasks, username=username, sort_by=sort_by, order=order, existing_ids=existing_ids, existing_titles=existing_titles)
 
 
 @app.route('/add', methods=['POST'])

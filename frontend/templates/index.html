@@ -9,7 +9,7 @@
     <script>
         window.onload = function () {
             var today = new Date();
-            var dateStr = today.toLocaleDateString('en-US');
+            var dateStr = today.toLocaleDateString('pl-PL');
             document.getElementById("current-date").innerHTML = dateStr;
         };
     </script>
@@ -17,6 +17,9 @@
 <body>
     <header>
         <img src="{{ url_for('static', filename='header_logo.png') }}" alt="Logo" class="logo">
+        {% if username %}
+            <p class="logged-as">Logged as: {{ username }}</strong></p>
+        {% endif %}
         <p class="date" span id="current-date"></span></p>
     </header>
 
