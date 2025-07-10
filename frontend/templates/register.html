@@ -30,8 +30,8 @@
                 <br>
                 <br>
                     <form method="post" action="{{ url_for('register') }}">
-                        <label for="username" data-lang="login">Username:</label>
-                        <input type="text" id="username" name="username" placeholder="new_tasman_user" required>
+                        <label for="username" data-lang="login">Username (cannot contain spaces):</label>
+                        <input type="text" id="username" name="username" placeholder="new_tasman_user" required pattern="^\S+$">
                         <span id="username-check"></span><br><br>
                         <label for="password" data-lang="password">Password (8 characters minimum):</label>
                         <input type="password" id="password" name="password" minlength="8" placeholder="new_user_password" required>
