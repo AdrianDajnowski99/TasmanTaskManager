@@ -22,6 +22,12 @@ if (logoutBtn) {
         window.location.href = '/logout';
     });
 }
+const usernameInput = document.getElementById('username');
+if (usernameInput) {
+    usernameInput.addEventListener('input', function() {
+        this.value = this.value.replace(/\s/g, '');
+    });
+}
 document.getElementById('username').addEventListener('input', function() {
     const username = this.value;
     const checkSpan = document.getElementById('username-check');

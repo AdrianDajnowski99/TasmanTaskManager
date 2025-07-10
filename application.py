@@ -75,8 +75,6 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-
-
 @app.route('/denied')
 def denied():
     return render_template('denied.html')
