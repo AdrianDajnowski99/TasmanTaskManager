@@ -22,3 +22,20 @@ if (logoutBtn) {
         window.location.href = '/logout';
     });
 }
+document.getElementById('username').addEventListener('input', function() {
+    const username = this.value;
+    const checkSpan = document.getElementById('username-check');
+    if (username.length < 3) {
+        checkSpan.textContent = '';
+        return;
+    }
+    fetch(`/api/check_username?username=${encodeURIComponent(username)}`)
+        .then(res => res.json())
+        .then(data => {
+            if (data.exists) {
+                checkSpan.textContent = 'Username already exists!';
+            } else {
+                checkSpan.textContent = '';
+            }
+        });
+});
