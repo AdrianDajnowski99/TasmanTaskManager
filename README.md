@@ -125,7 +125,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 - [x] Fixes for mobile responsiveness and display issues on mobile devices
 - [x] Add simple user authentication
 - [x] Add advanced user authentication
-- [ ] User authentication QoL
+- [ ] User authentication QoL and multilingual support for new features
 - [ ] Potential migration to Django (to be decided)
 
 
