@@ -18,6 +18,13 @@ app = Flask(__name__,
             static_folder='frontend/static') 
 app.secret_key = 'SECRET_KEY'
 
+@app.route ('/api/check_username', methods=['GET'])
+def check_username():
+    username = request.args.get('username')
+    if not username:
+        return jsonify({'exists': False})
+    user = auth.get_user_by_username(username)
+    return jsonify({'exists': user is not None})
     
 @app.route('/home')
 def home():
@@ -67,6 +74,8 @@ def login_required(f):
             return redirect(url_for('home'))
         return f(*args, **kwargs)
     return decorated_function
+
+
 
 @app.route('/denied')
 def denied():
