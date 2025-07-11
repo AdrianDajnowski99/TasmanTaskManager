@@ -5,7 +5,7 @@ from db_handling import DbHandling as db_conn
 from error_mapper import ErrorMapper
 
 conn = db_conn.connect_to_db()
-database_name = "tasmantaskmanagerdb" #remember to paste the correct database name
+database_name = "tasks" #remember to paste the correct table name
 status_inputs = ["To Do", "In Progress", "Done", "ND"]
 
 class AppStart:
