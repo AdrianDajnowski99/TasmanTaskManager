@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TASMAN - User Authentication</title>
+    <title data-lang="access_denied">TASMAN - User Authentication</title>
     <link rel="icon" href="{{ url_for('static', filename='newfavicon.png') }}" type="image/png">     
     <link rel="stylesheet" href="{{ url_for('static', filename='style_denied.css') }}">   
     <script>
@@ -18,26 +18,23 @@
 
     <header>
         <img src="{{ url_for('static', filename='header_logo.png') }}" alt="Logo" class="logo">
-        <p class="date" span id="current-date"></span></p>
+        <p class="date" id="current-date"></p>
     </header>
 
     <main>
         <div class="container">
             <div class="centered-container">
-                <h1>Access Denied!</h1>
+                <h1 data-lang="access_denied">Access Denied!</h1>
                 <br>
-                <h2>We're sorry, but you do not have permission to use the application.</h2>
-                <h2>Please create an account, log in to an existing account, or contact the administrator!</h2>
-                <!-- <br>
-                <a href="{{url_for('home')}}">Return to Home page</a><br> -->
+                <h2 data-lang="no_permission">We're sorry, but you do not have permission to use the application.</h2>
+                <h2 data-lang="denied_info">Please create an account, log in to an existing account, or contact the administrator!</h2>
             </div>
         </div>
     </main>
 
     <footer>
-    <p>2025 © All rights reserved.</span></p>
+        <p>2025 © <span data-lang="all-rights-reserved">All rights reserved.</span></p>
     </footer>
-
-    <!-- <script src="{{ url_for('static', filename='js/auth.js') }}"></script> -->
+    <script src="{{ url_for('static', filename='js/language_auth.js') }}"></script>
 </body>
 </html>
