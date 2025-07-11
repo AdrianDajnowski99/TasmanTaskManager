@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TASMAN - Login</title>
+    <title data-lang="login-title">TASMAN - Login</title>
     <link rel="icon" href="{{ url_for('static', filename='newfavicon.png') }}" type="image/png">     
     <link rel="stylesheet" href="{{ url_for('static', filename='style_login.css') }}">   
     <script>
@@ -18,32 +18,34 @@
 
     <header>
         <img src="{{ url_for('static', filename='header_logo.png') }}" alt="Logo" class="logo">
-        <p class="date" span id="current-date"></span></p>
+        <p class="date" id="current-date"></p>
     </header>
 
     <main>
         <div class="container">
             <div class="centered-container">
-                <h1>Login</h1>
+                <h1 data-lang="login-title">Login</h1>
                 <br>
-                <h2>Login to existing account to start using TASMAN Task Manager</h2>
+                <h2 data-lang="login-header">Login to existing account to start using TASMAN Task Manager</h2>
                 <br>
                 <br>
                 <form method="post" action="{{ url_for('login') }}">
-                    <label for="username" data-lang="login">Username:</label>
+                    <label for="username" data-lang="username-no-spaces">Username (cannot contain spaces):</label>
                     <input type="text" id="username" name="username" placeholder="tasman_user" required>
-                    <label for="password" data-lang="password">Password (8 characters minimum):</label>
+                    <label for="password" data-lang="password-min">Password (8 characters minimum):</label>
                     <input type="password" id="password" name="password" minlength="8" placeholder="user_password" required>
-                    <button type="submit" id="Login" data-lang="login">LOG IN</button>
-                    <a href="{{url_for('register')}}">Don't have an account? Create one!</a><br>
+                    <button type="submit" id="Login" data-lang="log-in">LOG IN</button>
+                    <a href="{{url_for('register')}}" data-lang="dont-have-account">Don't have an account? Create one!</a><br>
                 </form>    
             </div>
         </div>
     </main>
 
     <footer>
-    <p>2025 © All rights reserved.</span></p>
+    <p>2025 © <span data-lang="all-rights-reserved">All rights reserved.</span></p>
     </footer>
 
-</body>
+    <script src="{{ url_for('static', filename='js/language_auth.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TASMAN - User Authentication</title>
+    <title data-lang="task-manager">TASMAN - User Authentication</title>
     <link rel="icon" href="{{ url_for('static', filename='newfavicon.png') }}" type="image/png">     
     <link rel="stylesheet" href="{{ url_for('static', filename='style_home.css') }}">   
     <script>
@@ -18,27 +18,25 @@
 
     <header>
         <img src="{{ url_for('static', filename='header_logo.png') }}" alt="Logo" class="logo">
-        <p class="date" span id="current-date"></span></p>
+        <p class="date" id="current-date"></p>
     </header>
 
     <main>
         <div class="container">
             <div class="centered-container">
-                <h1>Welcome!</h1>
-                <h2>Register to create new account or login to existing account to start using TASMAN Task Manager</h2>
-                <button type="button" id="Login" data-url="{{ url_for('login') }}">Login</button>
-                <button type="button" id="Register" data-url="{{ url_for('register') }}">Register</button>
-
-                <!-- <a href="{{url_for('login')}}">Login Page</a><br> -->
-                <!-- <a href="{{url_for('register')}}">Register Page</a> -->
+                <h1 data-lang="welcome">Welcome!</h1>
+                <h2 data-lang="home-header">Register to create new account or login to existing account to start using TASMAN Task Manager</h2>
+                <button type="button" id="Login" data-url="{{ url_for('login') }}" data-lang="login">Login</button>
+                <button type="button" id="Register" data-url="{{ url_for('register') }}" data-lang="register">Register</button>
             </div>
         </div>
     </main>
 
     <footer>
-    <p>2025 © All rights reserved.</span></p>
+    <p>2025 © <span data-lang="all-rights-reserved">All rights reserved.</span></p>
     </footer>
 
+    <script src="{{ url_for('static', filename='js/language_auth.js') }}"></script>
     <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
 </body>
 </html>
