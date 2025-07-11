@@ -1,14 +1,13 @@
 <!-- [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![Unlicense License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]-->
+[![Issues][issues-shield]][issues-url]-->
+[![LinkedIn][linkedin-shield]][linkedin-url]
 [![MIT License][license-shield]][license-url]
 
 ## TASMAN Task Manager
 
-<!-- TABLE OF CONTENTS -->
+TABLE OF CONTENTS 
 <details>
   <summary>Table of Contents</summary>
   <ol>
@@ -126,7 +125,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 - [x] Fixes for mobile responsiveness and display issues on mobile devices
 - [x] Add simple user authentication
 - [x] Add advanced user authentication
-- [ ] User authentication QoL
+- [ ] User authentication QoL and multilingual support for new features
 - [ ] Potential migration to Django (to be decided)
 
 
@@ -176,7 +175,7 @@ If you have any questions, feedback, or suggestions, you can reach me through Gi
 
 OR
 
-Contact me via [LinkedIn](https://www.linkedin.com/in/adrian-dajnowski-71b122286/)
+Contact me via [LinkedIn][linkedin-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -213,9 +212,9 @@ Use this space to list resources you find helpful and would like to give credit 
 [issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
 [issues-url]: https://github.com/othneildrew/Best-README-Template/issues
 [license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew -->
+[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt-->
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555 
+[linkedin-url]: https://www.linkedin.com/in/adrian-dajnowski-71b122286/
 [license-shield]: https://img.shields.io/badge/license-MIT-brightgreen%5C
 [license-url]: https://github.com/AdrianDajnowski99/TasmanTaskManager/blob/main/LICENSE
 [product-screenshot]: frontend/static/TasmanTmReadme.png
