@@ -32,7 +32,7 @@
                 <form method="post" action="{{ url_for('register') }}">
                     <label for="username" data-lang="username-no-spaces">Username (cannot contain spaces):</label>
                     <input type="text" id="username" name="username" placeholder="new_tasman_user" required pattern="^\S+$">
-                    <span_check id="username-check"></span_check><br><br>
+                    <span id="username-check"></span><br><br>
                     <label for="password" data-lang="password-min">Password (8 characters minimum):</label>
                     <input type="password" id="password" name="password" minlength="8" placeholder="new_user_password" required>
                     <label for="confirm_password" data-lang="confirm-password-label">Confirm password:</label>
