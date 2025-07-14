@@ -54,8 +54,9 @@ def register():
             return render_template('register.html')
         try:
             auth.create_user(username, password)
-            flash('Registration successful. Please log in.')
-            return redirect(url_for('login'))
+            session['username'] = username
+            flash('Registration successful. You are now logged in.')
+            return redirect(url_for('index'))
         except Exception as e:
             flash('Username already exists')
             return render_template('register.html')

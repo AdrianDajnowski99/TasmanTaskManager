@@ -79,7 +79,12 @@ p {
     font-size: 16px;
     text-decoration: underline; 
 }
-span {
+.span_footer {
+    font-family: 'Helvetica', sans-serif;
+    margin-left: 10px;
+    color: 45464c;
+}
+.span_check {
     color: #00ff00;
     font-weight: bold;
     font-size: 20px;
