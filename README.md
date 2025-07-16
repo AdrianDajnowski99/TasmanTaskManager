@@ -126,7 +126,6 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 - [x] Add simple user authentication
 - [x] Add advanced user authentication
 - [x] User authentication QoL and multilingual support for new features
-- [ ] Potential migration to Django (to be decided)
 
 
 <!-- See the [open issues](link) for a full list of proposed features (and known issues). -->
