@@ -68,7 +68,7 @@ To run the application locally follow these steps:
 
 You need to have Docker installed on your machine.
 
-* **Docker**
+[Docker.js]
 
 install Docker: [Docker.com][Docker-url]
 
