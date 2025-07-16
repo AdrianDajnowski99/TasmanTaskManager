@@ -66,9 +66,7 @@ To run the application locally follow these steps:
 
 ### Prerequisites
 
-You need to have Docker installed on your machine.
-
-[Docker.js]
+You need to have Docker installed on your machine:
 
 install Docker: [Docker.com][Docker-url]
 
