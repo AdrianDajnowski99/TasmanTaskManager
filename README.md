@@ -125,7 +125,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 - [x] Add advanced user authentication
 - [x] User authentication QoL and multilingual support for new features
 - [x] Update the logo of application
-- [x] Update the logo of application
+- [ ] Potential migration to Django (to be decided)
 
 
 <!-- See the [open issues](link) for a full list of proposed features (and known issues). -->
