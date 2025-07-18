@@ -126,6 +126,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 - [x] Add simple user authentication
 - [x] Add advanced user authentication
 - [x] User authentication QoL and multilingual support for new features
+- [x] Update the logo of application
 - [ ] Potential migration to Django (to be decided)
 
 
@@ -217,7 +218,7 @@ Use this space to list resources you find helpful and would like to give credit 
 [linkedin-url]: https://www.linkedin.com/in/adrian-dajnowski-71b122286/
 [license-shield]: https://img.shields.io/badge/license-MIT-brightgreen%5C
 [license-url]: https://github.com/AdrianDajnowski99/TasmanTaskManager/blob/main/LICENSE
-[product-screenshot]: frontend/static/TasmanTmReadme.png
+[product-screenshot]: frontend/static/TasmanReadme.png
 
 [Python.js]: https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54
 [Python-url]: https://www.python.org/
