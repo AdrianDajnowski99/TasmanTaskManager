@@ -66,9 +66,7 @@ To run the application locally follow these steps:
 
 ### Prerequisites
 
-You need to have Docker installed on your machine.
-
-* **Docker**
+You need to have Docker installed on your machine:
 
 install Docker: [Docker.com][Docker-url]
 
@@ -127,7 +125,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 - [x] Add advanced user authentication
 - [x] User authentication QoL and multilingual support for new features
 - [x] Update the logo of application
-- [ ] Potential migration to Django (to be decided)
+- [x] Update the logo of application
 
 
 <!-- See the [open issues](link) for a full list of proposed features (and known issues). -->
